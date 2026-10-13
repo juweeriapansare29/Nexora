@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Order Details | Nexora</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f6fa;
+    color:#202124;
+}
+
+.top-bar{
+    background:linear-gradient(90deg,#f58220,#ff9d42);
+    color:white;
+    text-align:center;
+    padding:10px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.navbar{
+    height:72px;
+    background:white;
+    display:flex;
+    align-items:center;
+    padding:0 6%;
+    border-bottom:1px solid #e5e5e5;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:28px;
+    font-weight:800;
+    color:#172d55;
+    letter-spacing:-0.5px;
+}
+
+.logo-mark{
+    width:11px;
+    height:11px;
+    background:#f58220;
+    border-radius:50%;
+    display:inline-block;
+    box-shadow:0 0 0 5px rgba(245,130,32,0.12);
+}
+
+.logo-text{
+    color:#172d55;
+}
+
+.logo-text span{
+    color:#f58220;
+}
+
+.nav-links{
+    margin-left:auto;
+    display:flex;
+    gap:8px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    padding:10px 15px;
+    border-radius:7px;
+    font-size:14px;
+    font-weight:600;
+}
+
+.nav-links a:hover{
+    background:#f3f3f3;
+}
+
+.container{
+    width:92%;
+    max-width:1050px;
+    margin:38px auto;
+}
+
+.header{
+    background:linear-gradient(135deg,#171a35,#292d63);
+    color:white;
+    border-radius:18px;
+    padding:30px;
+    margin-bottom:22px;
+}
+
+.header small{
+    color:#ffad69;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1.5px;
+}
+
+.header h1{
+    margin-top:8px;
+    font-size:28px;
+}
+
+.header p{
+    margin-top:8px;
+    color:#cfd1e5;
+    font-size:13px;
+}
+
+.order-box{
+    background:white;
+    border:1px solid #e0e2e8;
+    border-radius:16px;
+    overflow:hidden;
+}
+
+.order-header{
+    padding:20px 24px;
+    background:#fafbfc;
+    border-bottom:1px solid #eee;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.order-header h2{
+    color:#171a35;
+    font-size:18px;
+}
+
+.order-id{
+    margin-top:6px;
+    color:#777;
+    font-size:12px;
+}
+
+.status{
+    padding:8px 14px;
+    border-radius:20px;
+    background:#eeeefe;
+    color:#554bb8;
+    font-size:11px;
+    font-weight:700;
+}
+
+.products{
+    padding:24px;
+}
+
+.product{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding:18px 0;
+    border-bottom:1px solid #eee;
+}
+
+.product:last-child{
+    border-bottom:none;
+}
+
+.product-image{
+    width:95px;
+    height:95px;
+    border-radius:12px;
+    overflow:hidden;
+    background:#f1f1f1;
+    flex-shrink:0;
+}
+
+.product-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.product-info{
+    flex:1;
+}
+
+.product-info h3{
+    font-size:16px;
+    color:#171a35;
+    margin-bottom:7px;
+}
+
+.product-info p{
+    color:#777;
+    font-size:12px;
+    margin-bottom:6px;
+}
+
+.quantity{
+    color:#888;
+    font-size:12px;
+}
+
+.price{
+    font-size:16px;
+    font-weight:700;
+    color:#171a35;
+}
+
+.summary{
+    border-top:1px solid #eee;
+    padding:22px 24px;
+    background:#fafbfc;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+    font-size:13px;
+}
+
+.summary-row.discount{
+    color:#16834d;
+}
+
+.summary-row.total{
+    border-top:1px solid #ddd;
+    padding-top:14px;
+    margin-top:14px;
+    font-size:18px;
+    font-weight:800;
+    color:#171a35;
+}
+
+.customer-box{
+    margin-top:20px;
+    background:white;
+    border:1px solid #e0e2e8;
+    border-radius:16px;
+    padding:24px;
+}
+
+.customer-box h2{
+    font-size:18px;
+    color:#171a35;
+    margin-bottom:15px;
+}
+
+.customer-row{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+    font-size:13px;
+}
+
+.customer-row:last-child{
+    border-bottom:none;
+}
+
+.customer-row span{
+    color:#777;
+}
+
+.customer-row strong{
+    color:#333;
+}
+
+.actions{
+    margin-top:22px;
+    display:flex;
+    gap:10px;
+}
+
+.btn{
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+    padding:11px 18px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:700;
+}
+
+.primary{
+    background:#f58220;
+    color:white;
+}
+
+.secondary{
+    background:white;
+    color:#333;
+    border:1px solid #ccc;
+}
+
+.empty{
+    background:white;
+    padding:50px;
+    text-align:center;
+    border-radius:16px;
+    color:#777;
+}
+
+footer{
+    margin-top:45px;
+    background:#121426;
+    color:white;
+    text-align:center;
+    padding:35px 6%;
+}
+
+.footer-logo{
+    font-size:25px;
+    font-weight:800;
+    color:#f58220;
+}
+
+footer p{
+    margin-top:8px;
+    color:#999db8;
+    font-size:13px;
+}
+
+@media(max-width:700px){
+
+    .order-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:12px;
+    }
+
+    .product{
+        align-items:flex-start;
+    }
+
+    .customer-row{
+        flex-direction:column;
+        gap:4px;
+    }
+
+    .actions{
+        flex-direction:column;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top-bar">
+    NEXORA FESTIVAL | Order Details
+</div>
+
+<header class="navbar">
+
+    <div class="logo">
+    <span class="logo-mark"></span>
+
+    <span class="logo-text">
+        Nex<span>ora</span>
+    </span>
+</div>
+
+    <nav class="nav-links">
+
+        <a href="index.html">Home</a>
+
+        <a href="products.html">Products</a>
+
+        <a href="cart.html">Cart</a>
+
+        <a href="order-history.html">My Orders</a>
+
+    </nav>
+
+</header>
+
+<main class="container">
+
+    <section class="header">
+
+        <small>NEXORA ORDER MANAGEMENT</small>
+
+        <h1>Order Details</h1>
+
+        <p>
+            Complete information about the selected customer order.
+        </p>
+
+    </section>
+
+    <div id="orderContent"></div>
+
+</main>
+
+<footer>
+
+    <div class="footer-logo">
+        Nexora
+    </div>
+
+    <p>
+        Cloud-Based Smart E-Commerce and Order Management System
+    </p>
+
+    <p>
+        © 2026 Nexora
+    </p>
+
+</footer>
+
+<script type="module">
+
+import { db } from "./firebase-config.js";
+
+import {
+    doc,
+    getDoc
+} from "firebase/firestore";
+
+
+const savedOrder =
+    JSON.parse(
+        localStorage.getItem("nexoraSelectedOrder")
+    );
+
+const container =
+    document.getElementById("orderContent");
+
+
+/* =========================
+   NO ORDER SELECTED
+========================= */
+
+if (!savedOrder) {
+
+    container.innerHTML = `
+        <div class="empty">
+
+            <h2>No Order Selected</h2>
+
+            <p style="margin-top:8px;">
+                Please select an order from Order History.
+            </p>
+
+            <div style="margin-top:20px;">
+
+                <a
+                    href="order-history.html"
+                    class="btn primary">
+
+                    Back to Orders
+
+                </a>
+
+            </div>
+
+        </div>
+    `;
+
+} else {
+
+    try {
+
+        /* =========================
+           GET LATEST FIREBASE ORDER
+        ========================= */
+
+        const orderRef =
+            doc(
+                db,
+                "orders",
+                savedOrder.orderId
+            );
+
+        const orderSnapshot =
+            await getDoc(orderRef);
+
+
+        let order =
+            savedOrder;
+
+
+        if (orderSnapshot.exists()) {
+
+            const firebaseData =
+                orderSnapshot.data();
+
+            order = {
+
+                ...savedOrder,
+
+                ...firebaseData,
+
+                orderId:
+                    savedOrder.orderId
+
+            };
+
+        }
+
+
+        /* =========================
+           CALCULATE PRICES
+        ========================= */
+
+        let originalPrice = 0;
+
+        let salePrice = 0;
+
+
+        order.items.forEach(function(item) {
+
+            const quantity =
+                Number(item.quantity || 1);
+
+            const price =
+                Number(item.price || 0);
+
+            const oldPrice =
+                Number(item.oldPrice || price);
+
+
+            originalPrice +=
+                oldPrice * quantity;
+
+
+            salePrice +=
+                price * quantity;
+
+        });
+
+
+        const discount =
+            originalPrice - salePrice;
+
+
+        /* =========================
+           DISPLAY ORDER
+        ========================= */
+
+        container.innerHTML = `
+
+            <section class="order-box">
+
+                <div class="order-header">
+
+                    <div>
+
+                        <h2>
+    ${
+        typeof order.customer === "object"
+            ? (
+                order.customer.name ||
+                order.customer.email ||
+                "Customer"
+              )
+            : (
+                order.customer ||
+                "Customer"
+              )
+    }
+</h2>
+
+                        <div class="order-id">
+                            Order ID: ${order.orderId}
+                        </div>
+
+                    </div>
+
+                    <span class="status">
+
+                        ${order.status || "Processing"}
+
+                    </span>
+
+                </div>
+
+
+                <div class="products">
+
+                    ${order.items.map(function(item) {
+
+                        return `
+
+                            <div class="product">
+
+                                <div class="product-image">
+
+                                    <img
+                                        src="${item.image || ""}"
+                                        alt="${item.name || "Product"}"
+                                        onerror="this.style.display='none'"
+                                    >
+
+                                </div>
+
+
+                                <div class="product-info">
+
+                                    <h3>
+                                        ${item.name || "Product"}
+                                    </h3>
+
+                                    <p>
+                                        ${item.category || "General"}
+                                    </p>
+
+                                    <span class="quantity">
+
+                                        Quantity:
+                                        ${item.quantity || 1}
+
+                                    </span>
+
+                                </div>
+
+
+                                <div class="price">
+
+                                    ₹${(
+                                        Number(item.price || 0) *
+                                        Number(item.quantity || 1)
+                                    ).toLocaleString("en-IN")}
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }).join("")}
+
+                </div>
+
+
+                <div class="summary">
+
+                    <div class="summary-row">
+
+                        <span>
+                            Original Price
+                        </span>
+
+                        <strong>
+
+                            ₹${originalPrice.toLocaleString("en-IN")}
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row discount">
+
+                        <span>
+                            Discount
+                        </span>
+
+                        <strong>
+
+                            - ₹${discount.toLocaleString("en-IN")}
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row total">
+
+                        <span>
+                            Total Paid
+                        </span>
+
+                        <strong>
+
+                            ₹${salePrice.toLocaleString("en-IN")}
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="customer-box">
+
+                <h2>
+                    Order Information
+                </h2>
+
+
+                <div class="customer-row">
+
+                    <span>
+                        Customer
+                    </span>
+
+                    <strong>
+                        ${
+    typeof order.customer === "object"
+        ? (
+            order.customer.name ||
+            order.customer.email ||
+            "Customer"
+          )
+        : (
+            order.customer ||
+            "Customer"
+          )
+}
+                    </strong>
+
+                </div>
+
+
+                <div class="customer-row">
+
+                    <span>
+                        Order Date
+                    </span>
+
+                    <strong>
+                        ${order.date || "Not available"}
+                    </strong>
+
+                </div>
+
+
+                <div class="customer-row">
+
+                    <span>
+                        Order ID
+                    </span>
+
+                    <strong>
+                        ${order.orderId}
+                    </strong>
+
+                </div>
+
+
+                <div class="customer-row">
+
+                    <span>
+                        Current Status
+                    </span>
+
+                    <strong>
+                        ${order.status || "Processing"}
+                    </strong>
+
+                </div>
+
+
+                <div class="customer-row">
+
+                    <span>
+                        Delivery
+                    </span>
+
+                    <strong>
+                        ${order.deliveryDate || "Expected soon"}
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <div class="actions">
+
+                <a
+                    href="order-history.html"
+                    class="btn secondary">
+
+                    Back to Orders
+
+                </a>
+
+
+                <a
+                    href="track-order.html"
+                    class="btn primary">
+
+                    Track Order
+
+                </a>
+
+            </div>
+
+        `;
+
+
+    } catch (error) {
+
+        console.error(
+            "Error loading order:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <h2>
+                    Unable to Load Order
+                </h2>
+
+                <p style="margin-top:8px;">
+                    Please try again.
+                </p>
+
+                <div style="margin-top:20px;">
+
+                    <a
+                        href="order-history.html"
+                        class="btn primary">
+
+                        Back to Orders
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+</script>
+<script type="module" src="./nexora-chatbot.js"></script>
+</body>
+
+</html>

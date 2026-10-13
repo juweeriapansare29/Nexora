@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Account | Nexora</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f8;
+            color: #172033;
+        }
+
+        header {
+            background: white;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff6b00;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 24px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #172033;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: #ff6b00;
+        }
+
+        .page {
+            width: 90%;
+            max-width: 1200px;
+            margin: 35px auto;
+        }
+
+        .welcome {
+            background: linear-gradient(135deg, #101c36, #172b52);
+            color: white;
+            padding: 32px;
+            border-radius: 18px;
+            margin-bottom: 28px;
+        }
+
+        .welcome h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #d8deea;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 25px;
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            height: fit-content;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .sidebar h3 {
+            margin-bottom: 18px;
+        }
+
+        .menu-item {
+            display: block;
+            padding: 13px 14px;
+            margin-bottom: 7px;
+            border-radius: 9px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: #fff1e6;
+            color: #ff6b00;
+        }
+
+        .logout {
+            border: none;
+            background: #fee2e2;
+            color: #dc2626;
+            width: 100%;
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .content {
+            display: grid;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            margin-bottom: 18px;
+            font-size: 21px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .stat {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 27px;
+            font-weight: bold;
+            color: #ff6b00;
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .account-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .account-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #777;
+        }
+
+        .value {
+            font-weight: 600;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .primary {
+            background: #ff6b00;
+            color: white;
+        }
+
+        .secondary {
+            background: #172033;
+            color: white;
+        }
+
+        .address-box {
+            color: #777;
+            line-height: 1.6;
+        }
+
+        .loading {
+            color: #777;
+            font-weight: normal;
+        }
+
+        .error-message {
+            color: #dc2626;
+        }
+
+        @media (max-width: 800px) {
+
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                gap: 10px;
+            }
+
+            nav a {
+                font-size: 14px;
+            }
+
+            .account-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .value {
+                text-align: left;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <a href="index.html" class="logo">Nexora</a>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+
+</header>
+
+
+<div class="page">
+
+    <section class="welcome">
+
+        <h1 id="welcomeName">My Account</h1>
+
+        <p>
+            Manage your Nexora account, orders and personal information.
+        </p>
+
+    </section>
+
+
+    <div class="layout">
+
+
+        <aside class="sidebar">
+
+            <h3>Account Menu</h3>
+
+            <a href="customer-dashboard.html"
+               class="menu-item active">
+                My Account
+            </a>
+
+            <a href="order-history.html"
+               class="menu-item">
+                My Orders
+            </a>
+
+            <a href="order-history.html"
+               class="menu-item">
+                Order History
+            </a>
+
+            <a href="products.html"
+               class="menu-item">
+                Continue Shopping
+            </a>
+
+            <button class="logout"
+                    id="logoutButton">
+                Logout
+            </button>
+
+        </aside>
+
+
+        <main class="content">
+
+
+            <section class="card">
+
+                <h2>Account Overview</h2>
+
+                <div class="stats">
+
+                    <div class="stat">
+
+                        <div class="stat-number"
+                             id="orderCount">
+                            0
+                        </div>
+
+                        <div class="stat-label">
+                            Orders
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="stat-number"
+                             id="cartCount">
+                            0
+                        </div>
+
+                        <div class="stat-label">
+                            Cart Items
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="stat-number">
+                            Active
+                        </div>
+
+                        <div class="stat-label">
+                            Account Status
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="card">
+
+                <h2>Personal Information</h2>
+
+
+                <div class="account-row">
+
+                    <span class="label">
+                        Full Name
+                    </span>
+
+                    <span class="value loading"
+                          id="customerName">
+                        Loading...
+                    </span>
+
+                </div>
+
+
+                <div class="account-row">
+
+                    <span class="label">
+                        Email
+                    </span>
+
+                    <span class="value loading"
+                          id="customerEmail">
+                        Loading...
+                    </span>
+
+                </div>
+
+
+                <div class="account-row">
+
+                    <span class="label">
+                        Mobile Number
+                    </span>
+
+                    <span class="value loading"
+                          id="customerPhone">
+                        Loading...
+                    </span>
+
+                </div>
+
+
+                <div class="account-row">
+
+                    <span class="label">
+                        Account Type
+                    </span>
+
+                    <span class="value"
+                          id="accountRole">
+                        Customer
+                    </span>
+
+                </div>
+
+
+                <div class="account-row">
+
+                    <span class="label">
+                        Account Created
+                    </span>
+
+                    <span class="value loading"
+                          id="createdDate">
+                        Loading...
+                    </span>
+
+                </div>
+
+
+                <div class="account-row">
+
+                    <span class="label">
+                        Platform
+                    </span>
+
+                    <span class="value">
+                        Nexora Cloud
+                    </span>
+
+                </div>
+
+
+                <div class="buttons">
+
+                    <a href="order-history.html"
+                       class="button primary">
+                        View My Orders
+                    </a>
+
+                    <a href="products.html"
+                       class="button secondary">
+                        Shop Now
+                    </a>
+
+                </div>
+
+            </section>
+
+
+            <section class="card">
+
+                <h2>Saved Address</h2>
+
+                <div class="address-box">
+
+                    No address saved yet.
+
+                    <br><br>
+
+                    Address management will be connected
+                    to your Nexora Firebase account.
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+    import { auth, db } from "./firebase-config.js";
+
+    import {
+        onAuthStateChanged,
+        signOut
+    } from "firebase/auth";
+
+    import {
+        doc,
+        getDoc
+    } from "firebase/firestore";
+
+
+    /*
+       Check Firebase login
+    */
+
+    onAuthStateChanged(auth, async (user) => {
+
+        if (!user) {
+
+            document.getElementById("customerName")
+                .textContent = "Not logged in";
+
+            document.getElementById("customerEmail")
+                .textContent = "Not logged in";
+
+            document.getElementById("customerPhone")
+                .textContent = "Not logged in";
+
+            return;
+        }
+
+
+        try {
+
+            /*
+               Find this customer's Firestore document.
+               The document ID is the Firebase user's UID.
+            */
+
+            const customerRef =
+                doc(db, "customers", user.uid);
+
+            const customerSnap =
+                await getDoc(customerRef);
+
+
+            if (customerSnap.exists()) {
+
+                const customer =
+                    customerSnap.data();
+
+
+                /*
+                   FULL NAME
+                */
+
+                const name =
+                    customer.name || "Nexora Customer";
+
+                document.getElementById("customerName")
+                    .textContent = name;
+
+                document.getElementById("welcomeName")
+                    .textContent = "Welcome, " + name;
+
+
+                /*
+                   EMAIL
+                */
+
+                document.getElementById("customerEmail")
+                    .textContent =
+                    customer.email || user.email || "Not available";
+
+
+                /*
+                   PHONE
+                */
+
+                document.getElementById("customerPhone")
+                    .textContent =
+                    customer.phone || "Not provided";
+
+
+                /*
+                   ROLE
+                */
+
+                const role =
+                    customer.role || "customer";
+
+                document.getElementById("accountRole")
+                    .textContent =
+                    role.charAt(0).toUpperCase() +
+                    role.slice(1);
+
+
+                /*
+                   CREATED DATE
+                */
+
+                const createdDate =
+                    document.getElementById("createdDate");
+
+
+                if (customer.createdAt) {
+
+                    if (
+                        typeof customer.createdAt.toDate === "function"
+                    ) {
+
+                        createdDate.textContent =
+                            customer.createdAt
+                                .toDate()
+                                .toLocaleDateString(
+                                    "en-IN",
+                                    {
+                                        day: "2-digit",
+                                        month: "short",
+                                        year: "numeric"
+                                    }
+                                );
+
+                    } else {
+
+                        createdDate.textContent =
+                            "Available";
+
+                    }
+
+                } else {
+
+                    createdDate.textContent =
+                        "Not available";
+
+                }
+
+
+                /*
+                   Remove loading appearance
+                */
+
+                document.getElementById("customerName")
+                    .classList.remove("loading");
+
+                document.getElementById("customerEmail")
+                    .classList.remove("loading");
+
+                document.getElementById("customerPhone")
+                    .classList.remove("loading");
+
+                document.getElementById("createdDate")
+                    .classList.remove("loading");
+
+
+            } else {
+
+                document.getElementById("customerName")
+                    .textContent =
+                    "Profile not found";
+
+                document.getElementById("customerEmail")
+                    .textContent =
+                    user.email || "Not available";
+
+                document.getElementById("customerPhone")
+                    .textContent =
+                    "Not available";
+
+                document.getElementById("createdDate")
+                    .textContent =
+                    "Not available";
+
+            }
+
+
+            /*
+               CART COUNT
+            */
+
+            const cart =
+                JSON.parse(
+                    localStorage.getItem("nexoraCart")
+                ) || [];
+
+
+            let cartItems = 0;
+
+
+            cart.forEach(item => {
+
+                cartItems +=
+                    Number(item.quantity) || 1;
+
+            });
+
+
+            document.getElementById("cartCount")
+                .textContent = cartItems;
+
+
+            /*
+               ORDER COUNT
+            */
+
+            const lastOrder =
+                localStorage.getItem("nexoraLastOrder");
+
+
+            if (lastOrder) {
+
+                document.getElementById("orderCount")
+                    .textContent = "1";
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "Customer profile error:",
+                error
+            );
+
+
+            document.getElementById("customerName")
+                .textContent =
+                "Unable to load";
+
+            document.getElementById("customerEmail")
+                .textContent =
+                "Unable to load";
+
+            document.getElementById("customerPhone")
+                .textContent =
+                "Unable to load";
+
+            document.getElementById("createdDate")
+                .textContent =
+                "Unable to load";
+
+        }
+
+    });
+
+
+    /*
+       LOGOUT
+    */
+
+    document.getElementById("logoutButton")
+        .addEventListener("click", async () => {
+
+            try {
+
+                await signOut(auth);
+
+                localStorage.removeItem(
+                    "nexoraCustomerName"
+                );
+
+                localStorage.removeItem(
+                    "nexoraCustomerEmail"
+                );
+
+                window.location.href =
+                    "login.html";
+
+            } catch (error) {
+
+                alert(
+                    "Logout failed. Please try again."
+                );
+
+            }
+
+        });
+
+</script>
+
+<script type="module" src="./nexora-chatbot.js"></script>
+</body>
+</html>

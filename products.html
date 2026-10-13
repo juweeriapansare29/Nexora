@@ -1,0 +1,2049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Products | Nexora</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: linear-gradient(135deg, #111827, #172554);
+            color: white;
+            min-height: 72px;
+            padding: 12px 5%;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+        }
+
+        .logo {
+            font-size: 29px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #ff8a00;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 650px;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            height: 42px;
+            padding: 0 45px 0 17px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+        }
+
+        .header-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            white-space: nowrap;
+        }
+
+        .header-links a {
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .header-links a:hover {
+            color: #ff9d2e;
+        }
+
+        .cart {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            width: 19px;
+            height: 19px;
+            background: #f97316;
+            color: white;
+            border-radius: 50%;
+            font-size: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        /* ================= NAV ================= */
+
+        .category-nav {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 12px 5%;
+            display: flex;
+            gap: 25px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .category-nav a {
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .category-nav a:hover {
+            color: #f97316;
+        }
+
+        /* ================= PAGE ================= */
+
+        .container {
+            width: 90%;
+            max-width: 1450px;
+            margin: auto;
+            padding: 22px 0 50px;
+        }
+
+        .breadcrumb {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 18px;
+        }
+
+        .breadcrumb strong {
+            color: #111827;
+        }
+
+        /* ================= BANNER ================= */
+
+        .banner {
+            background:
+                linear-gradient(
+                    120deg,
+                    #172554,
+                    #1e3a8a,
+                    #f97316
+                );
+
+            border-radius: 18px;
+            padding: 32px;
+            color: white;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner::before {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            right: -70px;
+            top: -100px;
+        }
+
+        .banner h1 {
+            font-size: 34px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .banner p {
+            font-size: 14px;
+            opacity: 0.92;
+            position: relative;
+            z-index: 2;
+        }
+
+        .product-count {
+            display: inline-block;
+            margin-top: 16px;
+            background: rgba(255,255,255,0.17);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ================= TOOLBAR ================= */
+
+        .toolbar {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 14px 17px;
+            margin-bottom: 22px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .result {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .result strong {
+            color: #111827;
+        }
+
+        .sort {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sort label {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .sort select {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            outline: none;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* ================= GRID ================= */
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        /* ================= CARD ================= */
+
+        .product-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.25s ease;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+            border-color: #d1d5db;
+        }
+
+        .image-box {
+            height: 245px;
+            background: #f8fafc;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 3;
+            background: #f97316;
+            color: white;
+            padding: 6px 9px;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .stock {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 3;
+            background: #dcfce7;
+            color: #15803d;
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .stock.low {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .stock.out {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .product-info {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .category-name {
+            color: #6b7280;
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 0.6px;
+            margin-bottom: 6px;
+        }
+
+        .product-name {
+            color: #111827;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.35;
+            min-height: 43px;
+            margin-bottom: 7px;
+        }
+
+        .rating-row {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 9px;
+        }
+
+        .rating {
+            background: #15803d;
+            color: white;
+            padding: 4px 7px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .stars {
+            color: #f59e0b;
+            font-size: 12px;
+        }
+
+        .reviews {
+            color: #6b7280;
+            font-size: 11px;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: auto;
+            margin-bottom: 8px;
+        }
+
+        .price {
+            color: #111827;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .old-price {
+            color: #9ca3af;
+            font-size: 12px;
+            text-decoration: line-through;
+        }
+
+        .discount {
+            color: #15803d;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .description {
+            color: #6b7280;
+            font-size: 11px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .btn {
+            border-radius: 7px;
+            padding: 10px 5px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .add-btn {
+            background: #fff7ed;
+            border: 1px solid #fdba74;
+            color: #ea580c;
+        }
+
+        .add-btn:hover {
+            background: #ffedd5;
+        }
+
+        .buy-btn {
+            background: #f97316;
+            border: 1px solid #f97316;
+            color: white;
+        }
+
+        .buy-btn:hover {
+            background: #ea580c;
+            border-color: #ea580c;
+        }
+
+        .btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 70px 20px;
+            text-align: center;
+            grid-column: 1 / -1;
+        }
+
+        .empty-icon {
+            font-size: 50px;
+            margin-bottom: 12px;
+        }
+
+        .empty h2 {
+            margin-bottom: 8px;
+        }
+
+        .empty p {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        .home-btn {
+            display: inline-block;
+            background: #f97316;
+            color: white;
+            padding: 11px 20px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* ================= TOAST ================= */
+
+        .toast {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            background: #111827;
+            color: white;
+            padding: 14px 20px;
+            border-radius: 9px;
+            font-size: 13px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            z-index: 9999;
+
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: 0.3s;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #111827;
+            color: white;
+            padding: 35px 5%;
+            margin-top: 30px;
+        }
+
+        .footer-grid {
+            max-width: 1450px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 30px;
+        }
+
+        footer h3 {
+            color: #ff8a00;
+            margin-bottom: 12px;
+        }
+
+        footer h4 {
+            margin-bottom: 10px;
+        }
+
+        footer p,
+        footer a {
+            color: #cbd5e1;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        footer a:hover {
+            color: #ff9d2e;
+        }
+
+        .copyright {
+            max-width: 1450px;
+            margin: 25px auto 0;
+            padding-top: 18px;
+            border-top: 1px solid #374151;
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1100px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 800px) {
+            .header {
+                flex-wrap: wrap;
+            }
+
+            .search-container {
+                order: 3;
+                max-width: none;
+                flex-basis: 100%;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .container {
+                width: 94%;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .sort {
+                justify-content: space-between;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-links {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <a href="index.html" class="logo">
+        NEXORA<span>.</span>
+    </a>
+
+    <div class="search-container">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search products in this category..."
+            autocomplete="off"
+        >
+
+        <span class="search-icon">🔍</span>
+    </div>
+
+    <div class="header-links">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="login.html">
+            Account
+        </a>
+
+        <a href="cart.html" class="cart">
+            🛒 Cart
+            <span
+                class="cart-count"
+                id="cartCount">
+                0
+            </span>
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- ================= CATEGORY NAV ================= -->
+
+<nav class="category-nav">
+
+    <a href="products.html">
+        All Products
+    </a>
+
+    <a href="products.html?category=Electronics">
+        Electronics
+    </a>
+
+    <a href="products.html?category=Mobiles">
+        Mobiles
+    </a>
+
+    <a href="products.html?category=Watches">
+        Watches
+    </a>
+
+    <a href="products.html?category=Men%27s%20Wear">
+        Men's Wear
+    </a>
+
+    <a href="products.html?category=Women%27s%20Wear">
+        Women's Wear
+    </a>
+
+    <a href="products.html?category=Baby%20Wear">
+        Baby Wear
+    </a>
+
+    <a href="products.html?category=Home%20%26%20Living">
+        Home & Living
+    </a>
+
+    <a href="products.html?category=Kitchen">
+        Kitchen
+    </a>
+
+    <a href="products.html?category=Footwear">
+        Footwear
+    </a>
+
+    <a href="products.html?category=Bags%20%26%20Travel">
+        Bags & Travel
+    </a>
+
+</nav>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+    <div class="breadcrumb">
+        Home / Products /
+        <strong id="breadcrumb">
+            All Products
+        </strong>
+    </div>
+
+
+    <section class="banner">
+
+        <h1 id="pageTitle">
+            All Products
+        </h1>
+
+        <p id="pageDescription">
+            Explore the complete Nexora product collection.
+        </p>
+
+        <div
+            class="product-count"
+            id="productCount">
+            Loading products...
+        </div>
+
+    </section>
+
+
+    <section class="toolbar">
+
+        <div
+            class="result"
+            id="resultText">
+            Loading products...
+        </div>
+
+        <div class="sort">
+
+            <label for="sortSelect">
+                Sort by:
+            </label>
+
+            <select id="sortSelect">
+
+                <option value="relevance">
+                    Relevance
+                </option>
+
+                <option value="price-low">
+                    Price: Low to High
+                </option>
+
+                <option value="price-high">
+                    Price: High to Low
+                </option>
+
+                <option value="rating">
+                    Customer Rating
+                </option>
+
+                <option value="discount">
+                    Highest Discount
+                </option>
+
+            </select>
+
+        </div>
+
+    </section>
+
+
+    <section
+        class="products-grid"
+        id="productsGrid">
+    </section>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-grid">
+
+        <div>
+
+            <h3>NEXORA.</h3>
+
+            <p>
+                A smart and modern shopping experience
+                designed for the next generation of customers.
+            </p>
+
+            <p>
+                Quality products. Simple shopping.
+                Secure checkout.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h4>Quick Links</h4>
+
+            <p>
+                <a href="index.html">
+                    Home
+                </a>
+            </p>
+
+            <p>
+                <a href="products.html">
+                    Products
+                </a>
+            </p>
+
+            <p>
+                <a href="cart.html">
+                    Cart
+                </a>
+            </p>
+
+            <p>
+                <a href="order-history.html">
+                    Orders
+                </a>
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h4>Categories</h4>
+
+            <p>
+                <a href="products.html?category=Mobiles">
+                    Mobiles
+                </a>
+            </p>
+
+            <p>
+                <a href="products.html?category=Electronics">
+                    Electronics
+                </a>
+            </p>
+
+            <p>
+                <a href="products.html?category=Men%27s%20Wear">
+                    Men's Wear
+                </a>
+            </p>
+
+            <p>
+                <a href="products.html?category=Women%27s%20Wear">
+                    Women's Wear
+                </a>
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h4>Customer Support</h4>
+
+            <p>Help Center</p>
+            <p>Track Order</p>
+            <p>Returns & Refunds</p>
+            <p>Secure Payments</p>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+        © 2026 Nexora. All rights reserved. |
+        Cloud Computing Group Project
+    </div>
+
+</footer>
+
+
+<!-- ================= TOAST ================= -->
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+<script src="./products-data.js"></script>
+
+
+
+
+<script>
+
+    /* =====================================================
+       GLOBAL VARIABLES
+       ===================================================== */
+
+    let allProducts = [];
+
+    let selectedCategory = "";
+
+    let searchTerm = "";
+
+    let sortType = "relevance";
+
+
+    /* =====================================================
+       START PAGE
+       ===================================================== */
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        console.log("Products page started.");
+
+        console.log(
+            "NEXORA_PRODUCTS:",
+            window.NEXORA_PRODUCTS
+        );
+
+
+        if (
+            window.NEXORA_PRODUCTS &&
+            Array.isArray(window.NEXORA_PRODUCTS)
+        ) {
+
+            allProducts =
+                window.NEXORA_PRODUCTS;
+
+            console.log(
+                "Products loaded:",
+                allProducts.length
+            );
+
+            initializePage();
+
+        } else {
+
+            console.error(
+                "NEXORA_PRODUCTS was not found."
+            );
+
+            showError();
+
+        }
+
+    });
+
+
+    /* =====================================================
+       READ URL
+       ===================================================== */
+
+    function readURL() {
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        selectedCategory =
+            params.get("category") || "";
+
+
+        searchTerm =
+            params.get("search") || "";
+
+    }
+
+
+    /* =====================================================
+       NORMALIZE TEXT
+       ===================================================== */
+
+    function normalize(value) {
+
+        return String(value || "")
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, " ");
+
+    }
+
+
+    /* =====================================================
+       INITIALIZE
+       ===================================================== */
+
+    function initializePage() {
+
+        readURL();
+
+        updateCategoryInfo();
+
+        document.getElementById(
+            "searchInput"
+        ).value = searchTerm;
+
+        renderProducts();
+
+        updateCartCount();
+
+    }
+
+
+    /* =====================================================
+       CATEGORY INFO
+       ===================================================== */
+
+    function updateCategoryInfo() {
+
+        const title =
+            document.getElementById(
+                "pageTitle"
+            );
+
+        const breadcrumb =
+            document.getElementById(
+                "breadcrumb"
+            );
+
+        const description =
+            document.getElementById(
+                "pageDescription"
+            );
+
+
+        if (selectedCategory) {
+
+            title.textContent =
+                selectedCategory;
+
+            breadcrumb.textContent =
+                selectedCategory;
+
+            description.textContent =
+                `Explore the latest ${selectedCategory} products available on Nexora.`;
+
+        } else {
+
+            title.textContent =
+                "All Products";
+
+            breadcrumb.textContent =
+                "All Products";
+
+            description.textContent =
+                "Explore the complete Nexora product collection.";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       GET CATEGORY PRODUCTS
+       ===================================================== */
+
+    function getCategoryProducts() {
+
+        if (!selectedCategory) {
+
+            return [...allProducts];
+
+        }
+
+
+        const wanted =
+            normalize(selectedCategory);
+
+
+        return allProducts.filter(
+            product =>
+                normalize(product.category) === wanted
+        );
+
+    }
+
+
+    /* =====================================================
+       SEARCH
+       ===================================================== */
+
+    function getFilteredProducts() {
+
+        let products =
+            getCategoryProducts();
+
+
+        if (searchTerm.trim() !== "") {
+
+            const search =
+                normalize(searchTerm);
+
+
+            products =
+                products.filter(product => {
+
+                    const text = [
+
+                        product.name,
+
+                        product.category,
+
+                        product.description,
+
+                        ...(Array.isArray(product.highlights)
+                            ? product.highlights
+                            : [])
+
+                    ].join(" ");
+
+
+                    return normalize(text)
+                        .includes(search);
+
+                });
+
+        }
+
+
+        return products;
+
+    }
+
+
+    /* =====================================================
+       SORT
+       ===================================================== */
+
+    function sortProducts(products) {
+
+        const result =
+            [...products];
+
+
+        if (sortType === "price-low") {
+
+            result.sort(
+                (a, b) =>
+                    Number(a.price || 0) -
+                    Number(b.price || 0)
+            );
+
+        }
+
+
+        if (sortType === "price-high") {
+
+            result.sort(
+                (a, b) =>
+                    Number(b.price || 0) -
+                    Number(a.price || 0)
+            );
+
+        }
+
+
+        if (sortType === "rating") {
+
+            result.sort(
+                (a, b) =>
+                    Number(b.rating || 0) -
+                    Number(a.rating || 0)
+            );
+
+        }
+
+
+if (sortType === "discount") {
+    result.sort(
+        (a, b) =>
+            getDiscount(b) - getDiscount(a)
+    );
+}
+
+        
+
+
+        return result;
+
+    }
+
+
+    /* =====================================================
+       DISCOUNT
+       ===================================================== */
+
+    function getDiscount(product) {
+
+        const price =
+            Number(product.price || 0);
+
+        const oldPrice =
+            Number(product.oldPrice || 0);
+
+
+        if (
+            oldPrice <= price ||
+            oldPrice === 0
+        ) {
+
+            return 0;
+
+        }
+
+
+        return Math.round(
+            ((oldPrice - price) / oldPrice) * 100
+        );
+
+    }
+
+
+    /* =====================================================
+       PRICE
+       ===================================================== */
+
+    function price(value) {
+
+        return new Intl.NumberFormat(
+            "en-IN"
+        ).format(
+            Number(value || 0)
+        );
+
+    }
+
+
+    /* =====================================================
+       HTML ESCAPE
+       ===================================================== */
+
+    function escapeHTML(value) {
+
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =====================================================
+       RENDER
+       ===================================================== */
+
+    function renderProducts() {
+
+        const grid =
+            document.getElementById(
+                "productsGrid"
+            );
+
+
+        let products =
+            getFilteredProducts();
+
+
+        products =
+            sortProducts(products);
+
+
+        document.getElementById(
+            "productCount"
+        ).textContent =
+            `${getCategoryProducts().length} product${getCategoryProducts().length === 1 ? "" : "s"} available`;
+
+
+        document.getElementById(
+            "resultText"
+        ).innerHTML =
+            `<strong>${products.length}</strong> product${products.length === 1 ? "" : "s"} found`;
+
+
+        if (products.length === 0) {
+
+            grid.innerHTML = `
+
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        🔎
+                    </div>
+
+                    <h2>
+                        No products found
+                    </h2>
+
+                    <p>
+                        No products match your current search.
+                    </p>
+
+                    <a
+                        href="products.html"
+                        class="home-btn">
+                        View All Products
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        grid.innerHTML =
+            products
+                .map(
+                    product =>
+                        createProductCard(product)
+                )
+                .join("");
+
+    }
+
+
+    /* =====================================================
+       PRODUCT CARD
+       ===================================================== */
+
+    function createProductCard(product) {
+
+        const id =
+            escapeHTML(product.id);
+
+
+        const name =
+            escapeHTML(product.name);
+
+
+        const category =
+            escapeHTML(product.category);
+
+
+        const description =
+            escapeHTML(
+                product.description || ""
+            );
+
+
+        const image =
+            product.image ||
+            createFallbackImage(
+                product.name
+            );
+
+
+        const currentPrice =
+            Number(product.price || 0);
+
+
+        const oldPrice =
+            Number(product.oldPrice || 0);
+
+
+        const rating =
+            Number(product.rating || 0);
+
+
+        const reviews =
+            Number(product.reviews || 0);
+
+
+        const stock =
+            Number(product.stock || 0);
+
+
+        const discount =
+            getDiscount(product);
+
+
+        let stockHTML = "";
+
+
+        if (stock <= 0) {
+
+            stockHTML = `
+                <div class="stock out">
+                    OUT OF STOCK
+                </div>
+            `;
+
+        } else if (stock <= 10) {
+
+            stockHTML = `
+                <div class="stock low">
+                    ONLY ${stock} LEFT
+                </div>
+            `;
+
+        } else {
+
+            stockHTML = `
+                <div class="stock">
+                    IN STOCK
+                </div>
+            `;
+
+        }
+
+
+        let stars = "";
+
+
+        for (
+            let i = 0;
+            i < 5;
+            i++
+        ) {
+
+            stars +=
+                i < Math.round(rating)
+                    ? "★"
+                    : "☆";
+
+        }
+
+
+        return `
+
+            <article
+                class="product-card"
+                onclick="openProduct('${id}')">
+
+
+                <div class="image-box">
+
+                    ${
+                        product.badge
+                            ? `
+                                <div class="badge">
+                                    ${escapeHTML(product.badge)}
+                                </div>
+                              `
+                            : ""
+                    }
+
+
+                    ${stockHTML}
+
+
+                    <img
+                        src="${escapeHTML(image)}"
+                        alt="${name}"
+                        class="product-image"
+                        loading="lazy"
+                        onerror="this.onerror=null;this.src=createFallbackImage('${id}')"
+                    >
+
+                </div>
+
+
+                <div class="product-info">
+
+
+                    <div class="category-name">
+                        ${category}
+                    </div>
+
+
+                    <div class="product-name">
+                        ${name}
+                    </div>
+
+
+                    <div class="rating-row">
+
+                        <span class="rating">
+                            ${rating.toFixed(1)} ★
+                        </span>
+
+                        <span class="stars">
+                            ${stars}
+                        </span>
+
+                        <span class="reviews">
+                            (${reviews})
+                        </span>
+
+                    </div>
+
+
+                    <div class="price-row">
+
+                        <span class="price">
+                            ₹${price(currentPrice)}
+                        </span>
+
+
+                        ${
+                            oldPrice > currentPrice
+                                ? `
+                                    <span class="old-price">
+                                        ₹${price(oldPrice)}
+                                    </span>
+                                  `
+                                : ""
+                        }
+
+
+                        ${
+                            discount > 0
+                                ? `
+                                    <span class="discount">
+                                        ${discount}% off
+                                    </span>
+                                  `
+                                : ""
+                        }
+
+                    </div>
+
+
+                    <div class="description">
+                        ${description}
+                    </div>
+
+
+                    <div class="actions">
+
+
+                        <button
+                            class="btn add-btn"
+                            ${stock <= 0 ? "disabled" : ""}
+                            onclick="event.stopPropagation(); addToCart('${id}')">
+
+                            🛒 Add to Cart
+
+                        </button>
+
+
+                        <button
+                            class="btn buy-btn"
+                            ${stock <= 0 ? "disabled" : ""}
+                            onclick="event.stopPropagation(); buyNow('${id}')">
+
+                            Buy Now
+
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       OPEN PRODUCT DETAILS
+       ===================================================== */
+
+    window.openProduct =
+        function(id) {
+
+            window.location.href =
+                "product-details.html?id=" +
+                encodeURIComponent(id);
+
+        };
+
+
+    /* =====================================================
+       ADD TO CART
+       ===================================================== */
+
+    window.addToCart =
+        function(id) {
+
+            const product =
+                allProducts.find(
+                    item =>
+                        String(item.id) === String(id)
+                );
+
+
+            if (!product) {
+
+                showToast(
+                    "Product not found."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                Number(product.stock || 0) <= 0
+            ) {
+
+                showToast(
+                    "This product is out of stock."
+                );
+
+                return;
+
+            }
+
+
+            let cart = [];
+
+
+            try {
+
+                cart =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "nexoraCart"
+                        )
+                    ) || [];
+
+            } catch {
+
+                cart = [];
+
+            }
+
+
+            const index =
+                cart.findIndex(
+                    item =>
+                        String(item.id) ===
+                        String(product.id)
+                );
+
+
+            if (index >= 0) {
+
+                const oldQuantity =
+                    Number(
+                        cart[index].quantity ||
+                        cart[index].qty ||
+                        1
+                    );
+
+
+                if (
+                    oldQuantity >=
+                    Number(product.stock)
+                ) {
+
+                    showToast(
+                        "Maximum available stock reached."
+                    );
+
+                    return;
+
+                }
+
+
+                cart[index].quantity =
+                    oldQuantity + 1;
+
+                cart[index].qty =
+                    oldQuantity + 1;
+
+            } else {
+
+                cart.push({
+
+                    ...product,
+
+                    quantity: 1,
+
+                    qty: 1
+
+                });
+
+            }
+
+
+            localStorage.setItem(
+                "nexoraCart",
+                JSON.stringify(cart)
+            );
+
+
+            updateCartCount();
+
+
+            showToast(
+                "✓ Product added to cart"
+            );
+
+        };
+
+
+    /* =====================================================
+       BUY NOW
+       ===================================================== */
+
+    window.buyNow =
+        function(id) {
+
+            const product =
+                allProducts.find(
+                    item =>
+                        String(item.id) === String(id)
+                );
+
+
+            if (!product) {
+
+                showToast(
+                    "Product not found."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                Number(product.stock || 0) <= 0
+            ) {
+
+                showToast(
+                    "This product is out of stock."
+                );
+
+                return;
+
+            }
+
+
+            /*
+                IMPORTANT:
+
+                Buy Now does NOT add the product
+                to nexoraCart.
+
+                It stores it separately for
+                the direct checkout process.
+            */
+
+            const directProduct = {
+
+                ...product,
+
+                quantity: 1,
+
+                qty: 1
+
+            };
+
+
+            localStorage.setItem(
+                "nexoraBuyNow",
+                JSON.stringify(directProduct)
+            );
+
+
+            /*
+                Go directly to checkout.
+            */
+
+            window.location.href =
+                "checkout.html?mode=buyNow";
+
+        };
+
+
+    /* =====================================================
+       CART COUNT
+       ===================================================== */
+
+    function updateCartCount() {
+
+        const element =
+            document.getElementById(
+                "cartCount"
+            );
+
+
+        let cart = [];
+
+
+        try {
+
+            cart =
+                JSON.parse(
+                    localStorage.getItem(
+                        "nexoraCart"
+                    )
+                ) || [];
+
+        } catch {
+
+            cart = [];
+
+        }
+
+
+        let total = 0;
+
+
+        cart.forEach(item => {
+
+            total +=
+                Number(
+                    item.quantity ||
+                    item.qty ||
+                    1
+                );
+
+        });
+
+
+        element.textContent =
+            total;
+
+    }
+
+
+    /* =====================================================
+       SEARCH
+       ===================================================== */
+
+    document.getElementById(
+        "searchInput"
+    ).addEventListener(
+        "input",
+        function () {
+
+            searchTerm =
+                this.value.trim();
+
+            renderProducts();
+
+        }
+    );
+
+
+    /* =====================================================
+       SORT
+       ===================================================== */
+
+    document.getElementById(
+        "sortSelect"
+    ).addEventListener(
+        "change",
+        function () {
+
+            sortType =
+                this.value;
+
+            renderProducts();
+
+        }
+    );
+
+
+    /* =====================================================
+       TOAST
+       ===================================================== */
+
+    function showToast(message) {
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+
+        toast.textContent =
+            message;
+
+
+        toast.classList.add(
+            "show"
+        );
+
+
+        setTimeout(
+            function () {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2200
+        );
+
+    }
+
+
+    /* =====================================================
+       FALLBACK IMAGE
+       ===================================================== */
+
+    function createFallbackImage(text) {
+
+        const safeText =
+            String(text || "NEXORA")
+                .substring(0, 20);
+
+
+        const svg = `
+
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="500"
+                height="500">
+
+                <rect
+                    width="500"
+                    height="500"
+                    fill="#f3f4f6"/>
+
+                <text
+                    x="250"
+                    y="235"
+                    text-anchor="middle"
+                    font-family="Arial"
+                    font-size="34"
+                    font-weight="bold"
+                    fill="#f97316">
+                    NEXORA
+                </text>
+
+                <text
+                    x="250"
+                    y="275"
+                    text-anchor="middle"
+                    font-family="Arial"
+                    font-size="16"
+                    fill="#6b7280">
+                    ${safeText}
+                </text>
+
+            </svg>
+
+        `;
+
+
+        return "data:image/svg+xml;charset=UTF-8," +
+            encodeURIComponent(svg);
+
+    }
+
+
+    /* =====================================================
+       ERROR SCREEN
+       ===================================================== */
+
+    function showError() {
+
+        document.getElementById(
+            "productCount"
+        ).textContent =
+            "Product data could not be loaded";
+
+
+        document.getElementById(
+            "resultText"
+        ).textContent =
+            "Unable to load products";
+
+
+        document.getElementById(
+            "productsGrid"
+        ).innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <h2>
+                    Product data could not be loaded
+                </h2>
+
+                <p>
+                    Please check that products-data.js
+                    is in the same folder as products.html.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+</script>
+<script type="module" src="./nexora-chatbot.js"></script>
+</body>
+</html>

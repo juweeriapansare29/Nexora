@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nexora - Checkout</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f6f8;
+    color: #1f2937;
+}
+
+.navbar {
+    height: 70px;
+    background: white;
+    display: flex;
+    align-items: center;
+    padding: 0 6%;
+    gap: 30px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: #f4511e;
+}
+
+.nav-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+}
+
+.nav-actions button {
+    border: none;
+    background: white;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #172033;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+.page-title {
+    margin-bottom: 25px;
+}
+
+.page-title h1 {
+    font-size: 30px;
+}
+
+.page-title p {
+    color: #6b7280;
+    margin-top: 7px;
+}
+
+.purchase-mode {
+    display: inline-block;
+    background: #fff3ed;
+    color: #f4511e;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.checkout-layout {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    font-size: 21px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.form-group textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.address-note {
+    background: #f8fafc;
+    padding: 12px;
+    border-radius: 5px;
+    color: #6b7280;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.delivery-option {
+    border: 1px solid #172554;
+    border-radius: 6px;
+    padding: 15px;
+    background: #f8fafc;
+}
+
+.delivery-option strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.delivery-option span {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.order-item {
+    display: grid;
+    grid-template-columns: 85px 1fr auto;
+    gap: 15px;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.order-item img {
+    width: 85px;
+    height: 85px;
+    object-fit: contain;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #f8fafc;
+}
+
+.order-item-name {
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+.order-item-category {
+    color: #6b7280;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.order-item-quantity {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.order-item-price {
+    text-align: right;
+    min-width: 150px;
+}
+
+.order-item-selling-price {
+    font-size: 17px;
+    font-weight: bold;
+    color: #111827;
+}
+
+.order-item-old-price {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 5px;
+}
+
+.order-item-old-price s {
+    color: #8b8f98;
+}
+
+.order-item-discount {
+    color: #15803d;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: 6px;
+}
+
+.offer-box {
+    margin-top: 15px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    padding: 14px;
+    border-radius: 7px;
+}
+
+.offer-box strong {
+    display: block;
+    color: #15803d;
+    margin-bottom: 5px;
+}
+
+.offer-box span {
+    color: #166534;
+    font-size: 13px;
+}
+
+.summary {
+    background: white;
+    border-radius: 8px;
+    padding: 25px;
+    height: fit-content;
+    position: sticky;
+    top: 25px;
+}
+
+.summary h2 {
+    font-size: 21px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 18px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    color: #4b5563;
+}
+
+.summary-row.total {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 18px;
+    margin-top: 18px;
+    color: #111827;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.discount-text {
+    color: #15803d;
+    font-weight: 600;
+}
+
+.offer-text {
+    color: #f4511e;
+    font-weight: 700;
+}
+
+.payment-note {
+    background: #f8fafc;
+    padding: 14px;
+    margin: 20px 0;
+    border-radius: 5px;
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.payment-btn {
+    width: 100%;
+    padding: 15px;
+    background: #f4511e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.payment-btn:hover {
+    background: #d84315;
+}
+
+.back-btn {
+    width: 100%;
+    padding: 13px;
+    margin-top: 10px;
+    background: white;
+    color: #172554;
+    border: 1px solid #172554;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.cloud-section {
+    background: white;
+    border-radius: 8px;
+    padding: 25px;
+    margin-top: 25px;
+}
+
+.cloud-section h2 {
+    margin-bottom: 10px;
+}
+
+.cloud-section p {
+    color: #6b7280;
+    line-height: 1.6;
+}
+
+footer {
+    margin-top: 50px;
+    background: #111827;
+    color: white;
+    padding: 40px 6%;
+}
+
+.footer-logo {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+footer p {
+    color: #cbd5e1;
+    margin-top: 8px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6b7280;
+}
+
+.empty-state h3 {
+    color: #172033;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 850px) {
+
+    .checkout-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .summary {
+        position: static;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding: 15px;
+    }
+
+    .container {
+        width: 94%;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .order-item {
+        grid-template-columns: 70px 1fr;
+    }
+
+    .order-item img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .order-item-price {
+        grid-column: 2;
+        text-align: left;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        Nexora
+    </div>
+
+    <div class="nav-actions">
+
+        <button onclick="window.location.href='index.html'">
+            Home
+        </button>
+
+        <button onclick="window.location.href='products.html'">
+            Products
+        </button>
+
+        <button onclick="goBack()">
+            Back
+        </button>
+
+    </div>
+
+</header>
+
+
+<div class="container">
+
+    <div class="page-title">
+
+        <h1 id="pageTitle">
+            Checkout
+        </h1>
+
+        <p id="pageDescription">
+            Enter your delivery details and review your order.
+        </p>
+
+        <div
+            id="purchaseMode"
+            class="purchase-mode"
+            style="display:none;">
+
+            BUY NOW PURCHASE
+
+        </div>
+
+    </div>
+
+
+    <div class="checkout-layout">
+
+
+        <div>
+
+
+            <section class="card">
+
+                <h2>
+                    Delivery Address
+                </h2>
+
+                <div class="address-note">
+
+                    Please provide accurate delivery information
+                    for your order.
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        id="fullName"
+                        type="text"
+                        placeholder="Enter your full name"
+                    >
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            Mobile Number
+                        </label>
+
+                        <input
+                            id="mobile"
+                            type="text"
+                            maxlength="10"
+                            placeholder="Enter mobile number"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            PIN Code
+                        </label>
+
+                        <input
+                            id="pincode"
+                            type="text"
+                            maxlength="6"
+                            placeholder="6-digit PIN code"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Address
+                    </label>
+
+                    <textarea
+                        id="address"
+                        placeholder="House / Building / Street / Area"></textarea>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            City
+                        </label>
+
+                        <select id="city">
+
+                            <option value="">
+                                Select City
+                            </option>
+
+                            <option value="Pune">
+                                Pune
+                            </option>
+
+                            <option value="Mumbai">
+                                Mumbai
+                            </option>
+
+                            <option value="Nagpur">
+                                Nagpur
+                            </option>
+
+                            <option value="Nashik">
+                                Nashik
+                            </option>
+
+                            <option value="Thane">
+                                Thane
+                            </option>
+
+                            <option value="Navi Mumbai">
+                                Navi Mumbai
+                            </option>
+
+                            <option value="Chhatrapati Sambhajinagar">
+                                Chhatrapati Sambhajinagar
+                            </option>
+
+                            <option value="Kolhapur">
+                                Kolhapur
+                            </option>
+
+                            <option value="Solapur">
+                                Solapur
+                            </option>
+
+                            <option value="Satara">
+                                Satara
+                            </option>
+
+                            <option value="Sangli">
+                                Sangli
+                            </option>
+
+                            <option value="Ahilyanagar">
+                                Ahilyanagar
+                            </option>
+
+                            <option value="Amravati">
+                                Amravati
+                            </option>
+
+                            <option value="Jalgaon">
+                                Jalgaon
+                            </option>
+
+                            <option value="Nanded">
+                                Nanded
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            State
+                        </label>
+
+                        <select id="state">
+
+                            <option value="">
+                                Select State
+                            </option>
+
+                            <option value="Maharashtra">
+                                Maharashtra
+                            </option>
+
+                            <option value="Karnataka">
+                                Karnataka
+                            </option>
+
+                            <option value="Gujarat">
+                                Gujarat
+                            </option>
+
+                            <option value="Delhi">
+                                Delhi
+                            </option>
+
+                            <option value="Tamil Nadu">
+                                Tamil Nadu
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="card">
+
+                <h2>
+                    Delivery Option
+                </h2>
+
+                <div class="delivery-option">
+
+                    <strong>
+                        Standard Delivery
+                    </strong>
+
+                    <span>
+                        Free delivery | Expected delivery within
+                        3–5 business days
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <section class="card">
+
+                <h2>
+                    Your Order
+                </h2>
+
+                <div id="orderItems"></div>
+
+            </section>
+
+
+        </div>
+
+
+        <aside class="summary">
+
+            <h2>
+                Price Summary
+            </h2>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Items
+                </span>
+
+                <span id="itemCount">
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    MRP
+                </span>
+
+                <span id="productPrice">
+                    ₹0
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Discount
+                </span>
+
+                <span
+                    id="discount"
+                    class="discount-text">
+
+                    - ₹0
+
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Offer
+                </span>
+
+                <span
+                    id="offer"
+                    class="offer-text">
+
+                    Applied
+
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Delivery
+                </span>
+
+                <span>
+                    FREE
+                </span>
+
+            </div>
+
+
+            <div class="summary-row total">
+
+                <span>
+                    Total
+                </span>
+
+                <span id="total">
+                    ₹0
+                </span>
+
+            </div>
+
+
+            <div
+                id="offerBox"
+                class="offer-box"
+                style="display:none;">
+
+                <strong>
+                    Nexora Offer Applied
+                </strong>
+
+                <span id="offerText">
+                </span>
+
+            </div>
+
+
+            <div class="payment-note">
+
+                Your order will continue to the
+                Nexora Payment Gateway after you
+                confirm the delivery information.
+
+            </div>
+
+
+            <button
+                class="payment-btn"
+                onclick="continueToPayment()">
+
+                Continue to Payment
+
+            </button>
+
+
+            <button
+                class="back-btn"
+                onclick="goBack()">
+
+                Back
+
+            </button>
+
+        </aside>
+
+    </div>
+
+
+    <section class="cloud-section">
+
+        <h2>
+            Cloud-Based Order Processing
+        </h2>
+
+        <p>
+
+            Nexora is designed so customer details,
+            cart information, orders, payment status
+            and delivery information can be connected
+            through cloud-based services. This allows
+            the customer, employee and manager modules
+            to work with centralized order information.
+
+        </p>
+
+    </section>
+
+</div>
+
+
+<footer>
+
+    <div class="footer-logo">
+        Nexora
+    </div>
+
+    <p>
+        Cloud-Based Smart E-Commerce and Order Management System
+    </p>
+
+    <p>
+        © 2026 Nexora
+    </p>
+
+</footer>
+
+
+<script>
+
+const urlParams =
+    new URLSearchParams(window.location.search);
+
+const buyNowMode =
+    urlParams.get("mode") === "buyNow";
+
+
+let order = [];
+
+
+if (buyNowMode) {
+
+    const buyNowProduct =
+        JSON.parse(
+            localStorage.getItem("nexoraBuyNow") || "null"
+        );
+
+    if (buyNowProduct) {
+
+        order = [
+            {
+                ...buyNowProduct,
+                quantity: Number(
+                    buyNowProduct.quantity || 1
+                )
+            }
+        ];
+
+    }
+
+} else {
+
+    order =
+        JSON.parse(
+            localStorage.getItem("nexoraCart") || "[]"
+        );
+
+}
+
+
+function formatMoney(value) {
+
+    return "₹" +
+        Number(value || 0).toLocaleString("en-IN");
+
+}
+
+
+function goBack() {
+
+    if (buyNowMode) {
+
+        window.location.href =
+            "product-details.html?id=" +
+            encodeURIComponent(
+                order[0]?.id || ""
+            );
+
+    } else {
+
+        window.location.href =
+            "cart.html";
+
+    }
+
+}
+
+
+function getDiscountPercent(item) {
+
+    const price =
+        Number(item.price || 0);
+
+    const oldPrice =
+        Number(item.oldPrice || price);
+
+    if (
+        oldPrice <= 0 ||
+        oldPrice <= price
+    ) {
+
+        return 0;
+
+    }
+
+    return Math.round(
+        ((oldPrice - price) / oldPrice) * 100
+    );
+
+}
+
+
+function setupPageMode() {
+
+    const mode =
+        document.getElementById("purchaseMode");
+
+    if (buyNowMode) {
+
+        document.getElementById("pageTitle")
+            .textContent =
+            "Buy Now - Checkout";
+
+        document.getElementById("pageDescription")
+            .textContent =
+            "Review your selected product, offer and final price before payment.";
+
+        mode.style.display =
+            "inline-block";
+
+    }
+
+}
+
+
+function displayOrder() {
+
+    const container =
+        document.getElementById("orderItems");
+
+
+    if (order.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <h3>
+                    No product selected
+                </h3>
+
+                <p>
+                    Please select a product before continuing.
+                </p>
+
+            </div>
+
+        `;
+
+        updateSummary();
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        order.map(item => {
+
+            const quantity =
+                Number(item.quantity) || 1;
+
+            const price =
+                Number(item.price) || 0;
+
+            const oldPrice =
+                Number(item.oldPrice) || price;
+
+            const itemTotal =
+                price * quantity;
+
+            const oldTotal =
+                oldPrice * quantity;
+
+            const discountPercent =
+                getDiscountPercent(item);
+
+
+            return `
+
+                <div class="order-item">
+
+                    <img
+                        src="${item.image || ""}"
+                        alt="${item.name || "Product"}"
+                        onerror="
+                            this.src='https://placehold.co/300x300/f1f3f5/172033?text=Nexora';
+                        "
+                    >
+
+                    <div>
+
+                        <div class="order-item-name">
+                            ${item.name || "Product"}
+                        </div>
+
+                        <div class="order-item-category">
+                            ${item.category || "Nexora Product"}
+                        </div>
+
+                        <div class="order-item-quantity">
+                            Quantity: ${quantity}
+                        </div>
+
+                    </div>
+
+                    <div class="order-item-price">
+
+                        <div class="order-item-selling-price">
+                            ${formatMoney(itemTotal)}
+                        </div>
+
+                        ${
+                            oldPrice > price
+                            ? `
+
+                                <div class="order-item-old-price">
+
+                                    <s>
+                                        ${formatMoney(oldTotal)}
+                                    </s>
+
+                                    <span class="order-item-discount">
+                                        ${discountPercent}% OFF
+                                    </span>
+
+                                </div>
+
+                            `
+                            : ""
+                        }
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+
+    updateSummary();
+
+}
+
+
+function updateSummary() {
+
+    let originalPrice = 0;
+
+    let totalPrice = 0;
+
+    let itemCount = 0;
+
+
+    order.forEach(item => {
+
+        const quantity =
+            Number(item.quantity) || 1;
+
+        const price =
+            Number(item.price) || 0;
+
+        const oldPrice =
+            Number(item.oldPrice) || price;
+
+
+        originalPrice +=
+            oldPrice * quantity;
+
+
+        totalPrice +=
+            price * quantity;
+
+
+        itemCount +=
+            quantity;
+
+    });
+
+
+    const discount =
+        Math.max(
+            0,
+            originalPrice - totalPrice
+        );
+
+
+    const discountPercent =
+        originalPrice > 0
+        ? Math.round(
+            (discount / originalPrice) * 100
+        )
+        : 0;
+
+
+    document.getElementById("itemCount")
+        .textContent =
+        itemCount;
+
+
+    document.getElementById("productPrice")
+        .textContent =
+        formatMoney(originalPrice);
+
+
+    document.getElementById("discount")
+        .textContent =
+        "- " + formatMoney(discount);
+
+
+    document.getElementById("total")
+        .textContent =
+        formatMoney(totalPrice);
+
+
+    document.getElementById("offer")
+        .textContent =
+        discountPercent > 0
+        ? discountPercent + "% OFF"
+        : "No Offer";
+
+
+    const offerBox =
+        document.getElementById("offerBox");
+
+
+    const offerText =
+        document.getElementById("offerText");
+
+
+    if (discountPercent > 0) {
+
+        offerBox.style.display =
+            "block";
+
+        offerText.textContent =
+            "You save " +
+            formatMoney(discount) +
+            " on this order. Your " +
+            discountPercent +
+            "% product discount has already been applied.";
+
+    } else {
+
+        offerBox.style.display =
+            "none";
+
+    }
+
+}
+
+
+function continueToPayment() {
+
+    if (order.length === 0) {
+
+        alert(
+            "Please select a product before continuing."
+        );
+
+        window.location.href =
+            "products.html";
+
+        return;
+
+    }
+
+
+    const name =
+        document.getElementById("fullName")
+            .value
+            .trim();
+
+
+    const mobile =
+        document.getElementById("mobile")
+            .value
+            .trim();
+
+
+    const pincode =
+        document.getElementById("pincode")
+            .value
+            .trim();
+
+
+    const address =
+        document.getElementById("address")
+            .value
+            .trim();
+
+
+    const city =
+        document.getElementById("city")
+            .value;
+
+
+    const state =
+        document.getElementById("state")
+            .value;
+
+
+    if (
+        name === "" ||
+        mobile === "" ||
+        pincode === "" ||
+        address === "" ||
+        city === "" ||
+        state === ""
+    ) {
+
+        alert(
+            "Please complete all delivery details before continuing."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !/^\d{10}$/.test(mobile)
+    ) {
+
+        alert(
+            "Please enter a valid 10-digit mobile number."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !/^\d{6}$/.test(pincode)
+    ) {
+
+        alert(
+            "Please enter a valid 6-digit PIN code."
+        );
+
+        return;
+
+    }
+
+
+    let originalPrice = 0;
+
+    let totalPrice = 0;
+
+
+    order.forEach(item => {
+
+        const quantity =
+            Number(item.quantity) || 1;
+
+        const price =
+            Number(item.price) || 0;
+
+        const oldPrice =
+            Number(item.oldPrice) || price;
+
+
+        originalPrice +=
+            oldPrice * quantity;
+
+
+        totalPrice +=
+            price * quantity;
+
+    });
+
+
+    const discount =
+        Math.max(
+            0,
+            originalPrice - totalPrice
+        );
+
+
+    const discountPercent =
+        originalPrice > 0
+        ? Math.round(
+            (discount / originalPrice) * 100
+        )
+        : 0;
+
+
+    const checkoutData = {
+
+        source:
+            buyNowMode
+            ? "Buy Now"
+            : "Cart",
+
+        items:
+            order,
+
+        customer: {
+
+            name:
+                name,
+
+            mobile:
+                mobile,
+
+            pincode:
+                pincode,
+
+            address:
+                address,
+
+            city:
+                city,
+
+            state:
+                state
+
+        },
+
+        totals: {
+
+            mrp:
+                originalPrice,
+
+            discount:
+                discount,
+
+            discountPercent:
+                discountPercent,
+
+            delivery:
+                0,
+
+            total:
+                totalPrice
+
+        },
+
+        offer: {
+
+            applied:
+                discountPercent > 0,
+
+            text:
+                discountPercent > 0
+                ? discountPercent + "% OFF"
+                : "No offer"
+
+        },
+
+        delivery: {
+
+            type:
+                "Standard Delivery",
+
+            charge:
+                0,
+
+            estimated:
+                "3–5 business days"
+
+        },
+
+        createdAt:
+            new Date().toISOString()
+
+    };
+
+
+    localStorage.setItem(
+        "nexoraCheckout",
+        JSON.stringify(checkoutData)
+    );
+
+
+    window.location.href =
+        "payment.html";
+
+}
+
+
+setupPageMode();
+
+displayOrder();
+
+</script>
+<script type="module" src="./nexora-chatbot.js"></script>
+</body>
+
+</html>

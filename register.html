@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Create Account | Nexora</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #f5f7fb;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar {
+      height: 72px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 7%;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      color: #f4511e;
+    }
+
+    .back-home {
+      text-decoration: none;
+      color: #374151;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .back-home:hover {
+      color: #f4511e;
+    }
+
+    .register-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 50px 20px;
+    }
+
+    .register-box {
+      width: 100%;
+      max-width: 480px;
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+    }
+
+    .register-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .register-header h1 {
+      font-size: 30px;
+      color: #111827;
+      margin-bottom: 10px;
+    }
+
+    .register-header p {
+      color: #6b7280;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 7px;
+      color: #374151;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: #f4511e;
+    }
+
+    .register-button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 8px;
+      background: #f4511e;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .register-button:hover {
+      background: #dc4214;
+    }
+
+    .register-button:disabled {
+      background: #a5a5a5;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      display: none;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .success {
+      display: block;
+      background: #effaf2;
+      color: #287044;
+      border: 1px solid #ccebd4;
+    }
+
+    .error {
+      display: block;
+      background: #fff1f1;
+      color: #b42318;
+      border: 1px solid #f5c2c2;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 22px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .login-link a {
+      color: #f4511e;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+
+      .navbar {
+        padding: 0 5%;
+      }
+
+      .register-box {
+        padding: 30px 22px;
+      }
+
+      .register-header h1 {
+        font-size: 26px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <header class="navbar">
+
+    <div class="logo">
+      Nexora
+    </div>
+
+    <a href="index.html" class="back-home">
+      Back to Home
+    </a>
+
+  </header>
+
+
+  <main class="register-container">
+
+    <div class="register-box">
+
+
+      <div class="register-header">
+
+        <h1>
+          Create Your Account
+        </h1>
+
+        <p>
+          Register with Nexora to shop products,
+          manage your cart and track your orders.
+        </p>
+
+      </div>
+
+
+      <form id="registerForm">
+
+
+        <div class="form-group">
+
+          <label for="name">
+            Full Name
+          </label>
+
+          <input
+            type="text"
+            id="name"
+            placeholder="Enter your full name"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="email">
+            Email Address
+          </label>
+
+          <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="phone">
+            Mobile Number
+          </label>
+
+          <input
+            type="tel"
+            id="phone"
+            placeholder="Enter your mobile number"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="password">
+            Password
+          </label>
+
+          <input
+            type="password"
+            id="password"
+            placeholder="Create a password"
+            required
+            minlength="6"
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="confirmPassword">
+            Confirm Password
+          </label>
+
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm your password"
+            required
+          >
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="register-button"
+          id="registerButton"
+        >
+
+          Create Account
+
+        </button>
+
+
+        <div
+          id="message"
+          class="message"
+        ></div>
+
+
+      </form>
+
+
+      <div class="login-link">
+
+        Already have an account?
+
+        <a href="login.html">
+          Login
+        </a>
+
+      </div>
+
+
+    </div>
+
+  </main>
+
+
+  <footer>
+
+    Nexora — Cloud-Based Smart E-Commerce and Order Management System
+
+  </footer>
+
+
+  <script type="module">
+
+    import {
+      auth,
+      db
+    } from "./firebase-config.js";
+
+    import {
+      createUserWithEmailAndPassword
+    } from "firebase/auth";
+
+    import {
+      doc,
+      setDoc,
+      serverTimestamp
+    } from "firebase/firestore";
+
+
+    const form =
+      document.getElementById("registerForm");
+
+    const button =
+      document.getElementById("registerButton");
+
+    const message =
+      document.getElementById("message");
+
+
+    function showMessage(
+      text,
+      type
+    ) {
+
+      message.textContent = text;
+
+      message.className =
+        "message " + type;
+
+    }
+
+
+    form.addEventListener(
+      "submit",
+      async function(event) {
+
+        event.preventDefault();
+
+
+        const name =
+          document.getElementById("name")
+            .value
+            .trim();
+
+
+        const email =
+          document.getElementById("email")
+            .value
+            .trim();
+
+
+        const phone =
+          document.getElementById("phone")
+            .value
+            .trim();
+
+
+        const password =
+          document.getElementById("password")
+            .value;
+
+
+        const confirmPassword =
+          document.getElementById("confirmPassword")
+            .value;
+
+
+        message.className =
+          "message";
+
+
+        /* PASSWORD CHECK */
+
+        if(password !== confirmPassword){
+
+          showMessage(
+            "Passwords do not match.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        /* PASSWORD LENGTH */
+
+        if(password.length < 6){
+
+          showMessage(
+            "Password must contain at least 6 characters.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        /* BUTTON */
+
+        button.disabled = true;
+
+        button.textContent =
+          "Creating Account...";
+
+
+        try {
+
+
+          /* CREATE FIREBASE USER */
+
+          const userCredential =
+            await createUserWithEmailAndPassword(
+              auth,
+              email,
+              password
+            );
+
+
+          const user =
+            userCredential.user;
+
+
+          /*
+             SAVE CUSTOMER INFORMATION
+             IN FIRESTORE
+          */
+
+          await setDoc(
+            doc(
+              db,
+              "customers",
+              user.uid
+            ),
+            {
+
+              uid: user.uid,
+
+              name: name,
+
+              email: email,
+
+              phone: phone,
+
+              role: "customer",
+
+              createdAt:
+                serverTimestamp()
+
+            }
+          );
+
+
+          /*
+             SAVE BASIC USER INFORMATION
+             FOR THE CURRENT SESSION
+          */
+
+          localStorage.setItem(
+            "nexoraCustomerName",
+            name
+          );
+
+
+          localStorage.setItem(
+            "nexoraCustomerEmail",
+            email
+          );
+
+
+          showMessage(
+            "Registration successful. Your Nexora account has been created.",
+            "success"
+          );
+
+
+          button.textContent =
+            "Account Created";
+
+
+          /*
+             Redirect to login
+             after successful registration.
+          */
+
+          setTimeout(
+            function(){
+
+              window.location.href =
+                "login.html";
+
+            },
+            1500
+          );
+
+
+        }
+
+        catch(error){
+
+          console.error(
+            "Registration error:",
+            error
+          );
+
+
+          let errorMessage =
+            "Registration failed. Please try again.";
+
+
+          if(
+            error.code ===
+            "auth/email-already-in-use"
+          ){
+
+            errorMessage =
+              "This email is already registered. Please login instead.";
+
+          }
+
+          else if(
+            error.code ===
+            "auth/invalid-email"
+          ){
+
+            errorMessage =
+              "Please enter a valid email address.";
+
+          }
+
+          else if(
+            error.code ===
+            "auth/weak-password"
+          ){
+
+            errorMessage =
+              "Password is too weak. Use at least 6 characters.";
+
+          }
+
+          else if(
+            error.code ===
+            "auth/network-request-failed"
+          ){
+
+            errorMessage =
+              "Network error. Please check your internet connection.";
+
+          }
+
+
+          showMessage(
+            errorMessage,
+            "error"
+          );
+
+
+          button.disabled = false;
+
+          button.textContent =
+            "Create Account";
+
+        }
+
+      }
+
+    );
+
+
+  </script>
+<script type="module" src="./nexora-chatbot.js"></script>
+
+</body>
+
+</html>

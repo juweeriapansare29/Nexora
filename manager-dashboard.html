@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manager Dashboard | Nexora</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f6f8;
+            color: #172033;
+        }
+
+        header {
+            height: 72px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: #f97316;
+        }
+
+        .portal {
+            margin-left: 12px;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logout {
+            padding: 9px 18px;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .logout:hover {
+            background: #f8fafc;
+        }
+
+        .page {
+            width: 90%;
+            max-width: 1250px;
+            margin: 35px auto 60px;
+        }
+
+        .hero {
+            background: linear-gradient(
+                135deg,
+                #172033,
+                #303b68
+            );
+
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .hero p {
+            color: #dbeafe;
+            font-size: 14px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            border: 1px solid #e5e7eb;
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.04);
+        }
+
+        .stat-card span {
+            display: block;
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .stat-card strong {
+            font-size: 28px;
+        }
+
+        .orange {
+            border-left: 4px solid #f97316;
+        }
+
+        .blue {
+            border-left: 4px solid #4f46e5;
+        }
+
+        .green {
+            border-left: 4px solid #16a34a;
+        }
+
+        .purple {
+            border-left: 4px solid #9333ea;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 22px;
+            border: 1px solid #e5e7eb;
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.04);
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f8fafc;
+            text-align: left;
+            padding: 13px;
+            font-size: 13px;
+            color: #475569;
+        }
+
+        td {
+            padding: 14px 13px;
+            border-top: 1px solid #eeeeee;
+            font-size: 13px;
+        }
+
+        .order-id {
+            font-weight: 700;
+            color: #172033;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .confirmed {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .processing {
+            background: #eef2ff;
+            color: #4338ca;
+        }
+
+        .shipped {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .delivered {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .summary-box {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .summary-box h3 {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .summary-box p {
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+
+        footer {
+            background: #172033;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 850px) {
+
+            .stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .page {
+                width: 92%;
+            }
+
+            .hero h1 {
+                font-size: 25px;
+            }
+
+            .portal {
+                display: none;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="header-left">
+
+        <div class="logo">
+            Nexora
+        </div>
+
+        <div class="portal">
+            Manager Portal
+        </div>
+
+    </div>
+
+    <button
+        class="logout"
+        onclick="logout()"
+    >
+        Logout
+    </button>
+
+</header>
+
+
+<main class="page">
+
+
+    <section class="hero">
+
+        <h1>
+            Manager Dashboard
+        </h1>
+
+        <p>
+            Monitor Nexora operations, customers,
+            products and order activity.
+        </p>
+
+    </section>
+
+
+    <!-- STATISTICS -->
+
+    <section class="stats">
+
+        <div class="stat-card orange">
+
+            <span>
+                Total Orders
+            </span>
+
+            <strong id="ordersCount">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card blue">
+
+            <span>
+                Total Customers
+            </span>
+
+            <strong id="customersCount">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card green">
+
+            <span>
+                Total Products
+            </span>
+
+            <strong id="productsCount">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card purple">
+
+            <span>
+                Delivered Orders
+            </span>
+
+            <strong id="deliveredCount">
+                0
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- ORDERS -->
+
+    <section class="card">
+
+        <h2>
+            Order Management
+        </h2>
+
+        <div
+            id="ordersContainer"
+            class="table-wrapper"
+        >
+            Loading orders...
+        </div>
+
+    </section>
+
+
+    <!-- OPERATIONS SUMMARY -->
+
+    <section class="card">
+
+        <h2>
+            Nexora Operations
+        </h2>
+
+        <div class="summary-grid">
+
+
+            
+
+<div class="summary-box" onclick="document.getElementById('ordersContainer').scrollIntoView({ behavior: 'smooth' })" style="cursor: pointer;">
+
+                <h3>
+                    📦 Order Management
+                </h3>
+
+                <p>
+                    Monitor customer orders and
+                    review their current delivery
+                    status.
+                </p>
+
+            </div>
+
+
+            
+<div class="summary-box" onclick="openCustomerManagement()" style="cursor: pointer;">
+
+    <h3>
+        👥 Customer Management
+    </h3>
+
+    <p>
+        View the registered Nexora
+        customer base and customer
+        activity.
+    </p>
+
+</div>
+
+
+           
+<div class="summary-box" onclick="openProductManagement()" style="cursor: pointer;">
+
+    <h3>
+        🛍️ Product Management
+    </h3>
+
+    <p>
+        Monitor the product catalogue
+        stored in the Firebase database.
+    </p>
+
+</div>
+
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<footer>
+
+    © 2026 Nexora — Cloud-Based Smart
+    E-Commerce and Order Management System
+
+</footer>
+
+
+<script type="module">
+
+    import { auth, db }
+        from "./firebase-config.js";
+
+    import {
+        collection,
+        getDocs
+    }
+    from "firebase/firestore";
+
+    import {
+        signOut
+    }
+    from "firebase/auth";
+
+
+    /*
+     * MANAGER ROLE CHECK
+     */
+
+    const currentUser =
+        JSON.parse(
+            localStorage.getItem(
+                "nexoraUser"
+            ) || "null"
+        );
+
+
+    if (
+        !currentUser ||
+        currentUser.role !== "manager"
+    ) {
+
+        window.location.href =
+            "login.html";
+
+    }
+
+
+    /*
+     * LOAD DASHBOARD DATA
+     */
+
+    async function loadDashboard() {
+
+        try {
+
+            /*
+             * Load Orders
+             */
+
+            const ordersSnapshot =
+                await getDocs(
+                    collection(
+                        db,
+                        "orders"
+                    )
+                );
+
+
+            const orders = [];
+
+
+            ordersSnapshot.forEach(
+                function(doc) {
+
+                    orders.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+
+                }
+            );
+
+
+            /*
+             * Load Customers
+             */
+
+            const customersSnapshot =
+                await getDocs(
+                    collection(
+                        db,
+                        "customers"
+                    )
+                );
+
+
+            const customers = [];
+
+
+            customersSnapshot.forEach(
+                function(doc) {
+
+                    customers.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+
+                }
+            );
+
+
+            /*
+             * Load Products
+             */
+
+            const productsSnapshot =
+                await getDocs(
+                    collection(
+                        db,
+                        "products"
+                    )
+                );
+
+
+            const products = [];
+
+
+            productsSnapshot.forEach(
+                function(doc) {
+
+                    products.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+
+                }
+            );
+
+
+            /*
+             * Update Statistics
+             */
+
+            document.getElementById(
+                "ordersCount"
+            ).textContent =
+                orders.length;
+
+
+            document.getElementById(
+                "customersCount"
+            ).textContent =
+                customers.length;
+
+
+            document.getElementById(
+                "productsCount"
+            ).textContent =
+                products.length;
+
+
+            document.getElementById(
+                "deliveredCount"
+            ).textContent =
+                orders.filter(
+                    function(order) {
+
+                        return String(
+                            order.status || ""
+                        )
+                        .toLowerCase()
+                        .includes(
+                            "delivered"
+                        );
+
+                    }
+                ).length;
+
+
+            /*
+             * Render Orders
+             */
+
+            renderOrders(orders);
+
+
+        } catch (error) {
+
+            console.error(
+                "Manager dashboard error:",
+                error
+            );
+
+
+            document.getElementById(
+                "ordersContainer"
+            ).innerHTML = `
+
+                <div class="empty">
+
+                    Unable to load
+                    dashboard data.
+
+                </div>
+
+            `;
+
+        }
+
+    }
+
+
+    /*
+     * RENDER ORDERS
+     */
+
+    function renderOrders(orders) {
+
+        const container =
+            document.getElementById(
+                "ordersContainer"
+            );
+
+
+        if (orders.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="empty">
+
+                    No orders found.
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        let html = `
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Order ID
+                        </th>
+
+                        <th>
+                            Customer
+                        </th>
+
+                        <th>
+                            Items
+                        </th>
+
+                        <th>
+                            Total
+                        </th>
+
+                        <th>
+                            Payment
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+        `;
+
+
+        orders.forEach(
+            function(order) {
+
+                const status =
+                    order.status ||
+                    "Confirmed";
+
+
+                const statusClass =
+                    String(status)
+                        .toLowerCase();
+
+
+                const items =
+                    Array.isArray(
+                        order.items
+                    )
+                    ? order.items.length
+                    : 0;
+
+
+                const total =
+                    Number(
+                        order.total ||
+                        order.amount ||
+                        0
+                    );
+
+
+                const customer =
+                    typeof order.customer ===
+                    "object"
+                    ? (
+                        order.customer.name ||
+                        order.customer.email ||
+                        "Customer"
+                    )
+                    : (
+                        order.customer ||
+                        order.customerName ||
+                        "Customer"
+                    );
+
+
+                html += `
+
+                    <tr>
+
+                        <td>
+
+                            <span
+                                class="order-id"
+                            >
+                                ${order.id}
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            ${customer}
+                        </td>
+
+
+                        <td>
+                            ${items}
+                        </td>
+
+
+                        <td>
+                            ₹${total.toLocaleString(
+                                "en-IN"
+                            )}
+                        </td>
+
+
+                        <td>
+                            ${
+                                order.paymentMethod ||
+                                "COD"
+                            }
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                class="
+                                    status
+                                    ${
+                                        statusClass.includes(
+                                            "processing"
+                                        )
+                                        ? "processing"
+                                        : statusClass.includes(
+                                            "shipped"
+                                        )
+                                        ? "shipped"
+                                        : statusClass.includes(
+                                            "delivered"
+                                        )
+                                        ? "delivered"
+                                        : "confirmed"
+                                    }
+                                "
+                            >
+                                ${status}
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        );
+
+
+        html += `
+
+                </tbody>
+
+            </table>
+
+        `;
+
+
+        container.innerHTML =
+            html;
+
+    }
+
+window.openCustomerManagement = async function() {
+    try {
+        const snapshot = await getDocs(collection(db, "customers"));
+
+        let html = `
+            <div class="card" id="customerManagementCard">
+               
+<h2>Registered Customers</h2>
+<button onclick="document.getElementById('customerManagementCard').remove()">
+    Close
+</button>
+<div id="customerList">
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Customer ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+        `;
+
+        if (snapshot.empty) {
+            html += `<tr><td colspan="3">No customers found.</td></tr>`;
+        } else {
+            snapshot.forEach((doc) => {
+                const customer = doc.data();
+                const name = customer.name || customer.fullName || "Not available";
+                const email = customer.email || "Not available";
+
+                html += `
+                    <tr>
+                        <td>${doc.id}</td>
+                        <td>${name}</td>
+                        <td>${email}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        html += `
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        const existing = document.getElementById("customerList");
+        if (existing) existing.remove();
+
+        document.querySelector("main.page").insertAdjacentHTML("beforeend", html);
+    } catch (error) {
+        console.error("Customer loading error:", error);
+        alert("Unable to load customers. Please check Firebase permissions.");
+    }
+};
+
+
+window.openProductManagement = async function() {
+    try {
+        const snapshot = await getDocs(collection(db, "products"));
+
+        const oldCard = document.getElementById("productManagementCard");
+        if (oldCard) oldCard.remove();
+
+        const card = document.createElement("div");
+        card.className = "card";
+        card.id = "productManagementCard";
+
+        const heading = document.createElement("h2");
+        heading.textContent = "Product Management";
+        card.appendChild(heading);
+
+        const closeButton = document.createElement("button");
+        closeButton.textContent = "Close";
+        closeButton.onclick = () => card.remove();
+        card.appendChild(closeButton);
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "table-wrapper";
+
+        const table = document.createElement("table");
+        table.innerHTML = `
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        `;
+
+        const tbody = table.querySelector("tbody");
+
+        if (snapshot.empty) {
+            const row = tbody.insertRow();
+            const cell = row.insertCell();
+            cell.colSpan = 5;
+            cell.textContent = "No products found.";
+        } else {
+            snapshot.forEach((productDoc) => {
+                const product = productDoc.data();
+                const row = tbody.insertRow();
+
+                const values = [
+                    productDoc.id,
+                    product.name || product.title || "Not available",
+                    product.category || "Not available",
+                    product.price != null ? "₹" + product.price : "Not available",
+                    product.stock ?? product.quantity ?? "Not available"
+                ];
+
+                values.forEach((value) => {
+                    const cell = row.insertCell();
+                    cell.textContent = String(value);
+                });
+            });
+        }
+
+        wrapper.appendChild(table);
+        card.appendChild(wrapper);
+        document.querySelector("main.page").appendChild(card);
+
+        card.scrollIntoView({ behavior: "smooth" });
+
+    } catch (error) {
+        console.error("Product loading error:", error);
+        alert("Unable to load products. Check the browser Console for details.");
+    }
+};
+   
+    
+    /*
+     * LOGOUT
+     */
+
+    window.logout =
+        async function() {
+
+            try {
+
+                await signOut(auth);
+
+            } catch (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+            }
+
+
+            localStorage.removeItem(
+                "nexoraUser"
+            );
+
+
+            window.location.href =
+                "login.html";
+
+        };
+
+
+    /*
+     * START DASHBOARD
+     */
+
+    loadDashboard();
+
+</script>
+<script type="module" src="./nexora-chatbot.js"></script>
+</body>
+</html>

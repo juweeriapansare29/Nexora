@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Nexora Firebase Product Upload</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      padding: 40px;
+      color: #111827;
+    }
+
+    .box {
+      max-width: 700px;
+      margin: 40px auto;
+      background: white;
+      padding: 35px;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 14px 22px;
+      border: none;
+      border-radius: 8px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+
+    #status {
+      margin-top: 25px;
+      padding: 15px;
+      background: #f3f4f6;
+      border-radius: 8px;
+      white-space: pre-line;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+
+    <h1>Nexora Product Database</h1>
+
+    <p>
+      This page uploads the existing Nexora product database
+      to Firebase Firestore.
+    </p>
+
+    <button id="uploadButton">
+      Upload 50 Products
+    </button>
+
+    <div id="status">
+      Ready to upload products.
+    </div>
+
+  </div>
+
+
+  <script src="products-data.js"></script>
+
+
+  <script type="module">
+
+    import { db, auth } from "./firebase-config.js";
+
+    import {
+      collection,
+      doc,
+      setDoc
+    } from "firebase/firestore";
+
+
+    const uploadButton =
+      document.getElementById("uploadButton");
+
+    const status =
+      document.getElementById("status");
+
+
+    uploadButton.addEventListener("click", async function() {
+
+      uploadButton.disabled = true;
+
+      status.textContent =
+        "Checking Firebase login...";
+
+
+      try {
+
+        if (!auth.currentUser) {
+
+          throw new Error(
+            "You are not logged in. Please login to Nexora first."
+          );
+
+        }
+
+
+        const products =
+          window.NEXORA_PRODUCTS || [];
+
+
+        if (products.length === 0) {
+
+          throw new Error(
+            "No products were found in products-data.js."
+          );
+
+        }
+
+
+        status.textContent =
+          "Logged in as: " +
+          auth.currentUser.email +
+          "\n\nUploading " +
+          products.length +
+          " products...";
+
+
+        for (const product of products) {
+
+          await setDoc(
+            doc(db, "products", product.id),
+            product
+          );
+
+          console.log(
+            "Uploaded:",
+            product.id,
+            product.name
+          );
+        }
+
+
+        status.textContent =
+          "SUCCESS!\n\n" +
+          products.length +
+          " products uploaded to Firestore.";
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        status.textContent =
+          "UPLOAD FAILED\n\n" +
+          error.message;
+
+      }
+
+
+      uploadButton.disabled = false;
+
+    });
+
+  </script>
+<script type="module" src="./nexora-chatbot.js"></script>
+</body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexora - Add Products</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        .navbar {
+            background: #0b1f3a;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #ff7a00;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #0b1f3a;
+        }
+
+        .subtitle {
+            color: #687386;
+            margin-bottom: 25px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 18px;
+        }
+
+        .product {
+            border: 1px solid #e4e8ef;
+            border-radius: 14px;
+            padding: 18px;
+            background: #fff;
+        }
+
+        .product h3 {
+            margin: 0 0 8px;
+            font-size: 17px;
+        }
+
+        .product p {
+            margin: 6px 0;
+            color: #687386;
+            font-size: 14px;
+        }
+
+        .price {
+            color: #0b1f3a !important;
+            font-weight: bold;
+            font-size: 17px !important;
+        }
+
+        #addProductsBtn {
+            margin-top: 25px;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #ff7a00;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+        }
+
+        #addProductsBtn:hover {
+            background: #e96d00;
+        }
+
+        #addProductsBtn:disabled {
+            opacity: 0.7;
+            cursor: wait;
+        }
+
+        #status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            font-weight: bold;
+        }
+
+        .success {
+            display: block !important;
+            background: #e8f8ef;
+            color: #137a43;
+        }
+
+        .error {
+            display: block !important;
+            background: #ffeaea;
+            color: #b42318;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">Nex<span>ora</span></div>
+    <div>Product Database</div>
+</header>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Add New Nexora Products</h1>
+
+        <p class="subtitle">
+            Add 10 additional products to the Nexora Firebase product database.
+        </p>
+
+        <div class="products">
+
+            <div class="product">
+                <h3>NXR051 — Classic Cotton Shirt</h3>
+                <p>Men's Wear</p>
+                <p class="price">₹999</p>
+            </div>
+
+            <div class="product">
+                <h3>NXR052 — Oversized Casual T-Shirt</h3>
+                <p>Men's Wear</p>
+                <p class="price">₹799</p>
+            </div>
+
+            <div class="product">
+                <h3>NXR053 — Women's Relaxed Fit Shirt</h3>
+                <p>Women's Wear</p>
+                <p class="price">₹1099</p>
+            </div>
+
+            <div class="product">
+                <h3>NXR054 — Decorative Ceramic Table Vase</h3>
+                <p>Home Decor</p>
+                <p class="price">₹899</p>
+            </div>
+
+            <div class="product">
+                <h3>NXR055 — Modern Wall Art Set</h3>
+                <p>Home Decor</p>
+                <p class="price">₹1299</p>
+            </div>
+
+            <div class="product">
+                <h3>NXR056 — Vitamin C Brightening Face Serum</h3>
+                <p>Skincare</p>
+                <p class="price">₹699</p>
+            </div>
+
+            <div class="product">
+                <h3>NXR057 — Gentle Hydrating Face Wash</h3>
+                <p>Skincare</p>
+                <p class="price">₹449</p>
+            </div>
+
+            <div class="product">
+                <h3>NXR058 — Premium Hardcover Notebook Set</h3>
+                <p>Stationery</p>
+                <p class="price">₹499</p>
+            </div>
+
+            <div class="product">
+                <h3>NXR059 — Smooth Gel Pen Set</h3>
+                <p>Stationery</p>
+                <p class="price">₹299</p>
+            </div>
+
+            <div class="product">
+                <h3>NXR060 — Minimal Desk Organizer</h3>
+                <p>Stationery</p>
+                <p class="price">₹599</p>
+            </div>
+
+        </div>
+
+        <button type="button" id="addProductsBtn">
+            Add 10 Products to Firebase
+        </button>
+
+        <div id="status"></div>
+
+    </div>
+
+</div>
+
+<script type="module">
+
+    import { db } from "./firebase-config.js";
+
+    import {
+        collection,
+        addDoc
+    } from "firebase/firestore";
+
+
+    const products = [
+
+        {
+            id: "NXR051",
+            name: "Classic Cotton Shirt",
+            category: "Men's Wear",
+            price: 999,
+            oldPrice: 1499,
+            badge: "33% Off",
+            rating: 4.4,
+            reviews: 284,
+            stock: 42,
+            image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=900&q=85",
+            description: "Classic cotton shirt designed for office, college and everyday casual wear.",
+            highlights: ["Soft cotton fabric","Regular fit","Full sleeves","Button closure","Breathable material"],
+            specifications: {
+                "Material": "Cotton Blend",
+                "Fit": "Regular",
+                "Pattern": "Solid",
+                "Sleeves": "Full",
+                "Care": "Machine Wash",
+                "Return": "7 Days"
+            }
+        },
+
+        {
+            id: "NXR052",
+            name: "Oversized Casual T-Shirt",
+            category: "Men's Wear",
+            price: 799,
+            oldPrice: 1199,
+            badge: "Popular",
+            rating: 4.5,
+            reviews: 318,
+            stock: 55,
+            image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85",
+            description: "Comfortable oversized T-shirt with a relaxed fit for everyday casual styling.",
+            highlights: ["Oversized fit","Soft cotton fabric","Round neck","Breathable","Everyday comfort"],
+            specifications: {
+                "Material": "100% Cotton",
+                "Fit": "Oversized",
+                "Neck": "Round",
+                "Sleeves": "Half",
+                "Care": "Machine Wash",
+                "Return": "7 Days"
+            }
+        },
+
+        {
+            id: "NXR053",
+            name: "Women's Relaxed Fit Shirt",
+            category: "Women's Wear",
+            price: 1099,
+            oldPrice: 1599,
+            badge: "New",
+            rating: 4.4,
+            reviews: 236,
+            stock: 37,
+            image: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=85",
+            description: "Relaxed-fit women's shirt designed for comfortable everyday and casual wear.",
+            highlights: ["Relaxed fit","Soft fabric","Button closure","Lightweight","Easy styling"],
+            specifications: {
+                "Material": "Cotton Blend",
+                "Fit": "Relaxed",
+                "Pattern": "Solid",
+                "Sleeves": "Full",
+                "Care": "Machine Wash",
+                "Return": "7 Days"
+            }
+        },
+
+        {
+            id: "NXR054",
+            name: "Decorative Ceramic Table Vase",
+            category: "Home Decor",
+            price: 899,
+            oldPrice: 1299,
+            badge: "30% Off",
+            rating: 4.5,
+            reviews: 174,
+            stock: 29,
+            image: "https://images.unsplash.com/photo-1578500351865-d6c3706c2c1b?auto=format&fit=crop&w=900&q=85",
+            description: "Elegant ceramic table vase designed to add a modern decorative touch to living spaces.",
+            highlights: ["Modern design","Ceramic construction","Decorative finish","Stable base","Easy to clean"],
+            specifications: {
+                "Material": "Ceramic",
+                "Height": "10 Inches",
+                "Style": "Modern",
+                "Usage": "Home Decor",
+                "Finish": "Matte",
+                "Return": "7 Days"
+            }
+        },
+
+        {
+            id: "NXR055",
+            name: "Modern Wall Art Set",
+            category: "Home Decor",
+            price: 1299,
+            oldPrice: 1799,
+            badge: "Trending",
+            rating: 4.4,
+            reviews: 143,
+            stock: 24,
+            image: "https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=900&q=85",
+            description: "Modern wall art set designed to enhance bedrooms, living rooms and workspaces.",
+            highlights: ["Modern artwork","Set of 3","Ready to display","Lightweight frames","Suitable for living spaces"],
+            specifications: {
+                "Set": "3 Pieces",
+                "Material": "Canvas",
+                "Style": "Modern",
+                "Frame": "Wood",
+                "Usage": "Wall Decor",
+                "Return": "7 Days"
+            }
+        },
+
+        {
+            id: "NXR056",
+            name: "Vitamin C Brightening Face Serum",
+            category: "Skincare",
+            price: 699,
+            oldPrice: 999,
+            badge: "30% Off",
+            rating: 4.5,
+            reviews: 426,
+            stock: 48,
+            image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=900&q=85",
+            description: "Lightweight vitamin C face serum designed for a fresh and bright-looking skincare routine.",
+            highlights: ["Vitamin C formula","Lightweight texture","Easy application","Daily skincare","Suitable for routine use"],
+            specifications: {
+                "Volume": "30 ml",
+                "Form": "Serum",
+                "Key Ingredient": "Vitamin C",
+                "Skin Type": "All Skin Types",
+                "Usage": "Face",
+                "Shelf Life": "24 Months"
+            }
+        },
+
+        {
+            id: "NXR057",
+            name: "Gentle Hydrating Face Wash",
+            category: "Skincare",
+            price: 449,
+            oldPrice: 599,
+            badge: "Popular",
+            rating: 4.4,
+            reviews: 381,
+            stock: 63,
+            image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=900&q=85",
+            description: "Gentle daily face wash designed to cleanse the skin while maintaining a comfortable feel.",
+            highlights: ["Gentle cleansing","Hydrating formula","Daily use","Light texture","Easy pump bottle"],
+            specifications: {
+                "Volume": "100 ml",
+                "Form": "Face Wash",
+                "Skin Type": "All Skin Types",
+                "Usage": "Daily",
+                "Texture": "Gel",
+                "Shelf Life": "24 Months"
+            }
+        },
+
+        {
+            id: "NXR058",
+            name: "Premium Hardcover Notebook Set",
+            category: "Stationery",
+            price: 499,
+            oldPrice: 699,
+            badge: "New",
+            rating: 4.6,
+            reviews: 218,
+            stock: 70,
+            image: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&w=900&q=85",
+            description: "Premium hardcover notebook set suitable for notes, journaling, study and office work.",
+            highlights: ["Hardcover design","Smooth paper","Durable binding","Clean pages","Study friendly"],
+            specifications: {
+                "Set": "3 Notebooks",
+                "Pages": "160 Each",
+                "Size": "A5",
+                "Paper": "80 GSM",
+                "Binding": "Hardcover",
+                "Usage": "Study / Office"
+            }
+        },
+
+        {
+            id: "NXR059",
+            name: "Smooth Gel Pen Set",
+            category: "Stationery",
+            price: 299,
+            oldPrice: 399,
+            badge: "25% Off",
+            rating: 4.5,
+            reviews: 347,
+            stock: 95,
+            image: "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?auto=format&fit=crop&w=900&q=85",
+            description: "Smooth-writing gel pen set designed for students, notes and everyday writing.",
+            highlights: ["Smooth ink flow","Comfortable grip","Quick drying","Fine writing tip","Long-lasting ink"],
+            specifications: {
+                "Set": "10 Pens",
+                "Ink": "Gel",
+                "Tip": "0.5 mm",
+                "Grip": "Rubber",
+                "Usage": "Writing",
+                "Ink Color": "Mixed"
+            }
+        },
+
+        {
+            id: "NXR060",
+            name: "Minimal Desk Organizer",
+            category: "Stationery",
+            price: 599,
+            oldPrice: 899,
+            badge: "33% Off",
+            rating: 4.4,
+            reviews: 192,
+            stock: 44,
+            image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=85",
+            description: "Minimal desk organizer designed to keep pens, notebooks and accessories neatly arranged.",
+            highlights: ["Multiple sections","Minimal design","Space saving","Easy to clean","Strong construction"],
+            specifications: {
+                "Material": "ABS Plastic",
+                "Sections": "6",
+                "Color": "Black",
+                "Usage": "Desk / Office",
+                "Design": "Minimal",
+                "Return": "7 Days"
+            }
+        }
+
+    ];
+
+
+    const button = document.getElementById("addProductsBtn");
+    const status = document.getElementById("status");
+
+
+    function showStatus(message, type) {
+        status.textContent = message;
+        status.className = type;
+        status.style.display = "block";
+    }
+
+
+    button.addEventListener("click", async function () {
+
+        button.disabled = true;
+        button.textContent = "Adding Products...";
+
+        status.textContent = "";
+        status.className = "";
+        status.style.display = "none";
+
+        try {
+
+            let added = 0;
+
+            for (const product of products) {
+
+                await addDoc(
+                    collection(db, "products"),
+                    product
+                );
+
+                added++;
+            }
+
+            button.textContent = "Products Added Successfully";
+
+            showStatus(
+                "Success! " + added + " products were added to Firebase.",
+                "success"
+            );
+
+        } catch (error) {
+
+            console.error("Firebase error:", error);
+
+            button.disabled = false;
+            button.textContent = "Try Again";
+
+            showStatus(
+                "Firebase Error: " + error.message,
+                "error"
+            );
+        }
+
+    });
+
+</script>
+<script type="module" src="./nexora-chatbot.js"></script>
+</body>
+</html>

@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order | Nexora</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f6f8;
+            color: #172033;
+        }
+
+        header {
+            height: 72px;
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: #f97316;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #172033;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav a:hover {
+            color: #f97316;
+        }
+
+        .secure {
+            color: #15803d;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .page {
+            width: 88%;
+            max-width: 1200px;
+            margin: 35px auto 60px;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .heading p {
+            color: #6b7280;
+        }
+
+        .order-header {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .order-id {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .order-id strong {
+            color: #172033;
+            font-size: 16px;
+        }
+
+        .status-badge {
+            padding: 9px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            background: #eef2ff;
+            color: #4f46e5;
+        }
+
+        .status-delivered {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.5fr 0.8fr;
+            gap: 22px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+            margin-bottom: 22px;
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 22px;
+        }
+
+        .tracking {
+            position: relative;
+            padding: 5px 5px 5px 10px;
+        }
+
+        .track-item {
+            position: relative;
+            display: flex;
+            gap: 18px;
+            min-height: 82px;
+        }
+
+        .track-icon-area {
+            width: 38px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .track-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #f97316;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .track-icon.pending {
+            background: #d1d5db;
+        }
+
+        .track-line {
+            position: absolute;
+            top: 32px;
+            width: 3px;
+            height: 60px;
+            background: #f97316;
+        }
+
+        .track-line.pending {
+            background: #d1d5db;
+        }
+
+        .track-item:last-child .track-line {
+            display: none;
+        }
+
+        .track-content {
+            padding-bottom: 20px;
+        }
+
+        .track-content h3 {
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .track-content p {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .current {
+            color: #f97316 !important;
+            font-weight: 700;
+        }
+
+        .product {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .product:last-child {
+            border-bottom: none;
+        }
+
+        .product img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #f1f1f1;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-info h3 {
+            font-size: 16px;
+            margin-bottom: 7px;
+        }
+
+        .product-info p {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        .price {
+            font-size: 16px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .delivery-row {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .delivery-icon {
+            width: 38px;
+            height: 38px;
+            background: #eef2ff;
+            color: #4f46e5;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .delivery-info h3 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .delivery-info p {
+            color: #6b7280;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eeeeee;
+            font-size: 14px;
+        }
+
+        .payment-row:last-child {
+            border-bottom: none;
+        }
+
+        .paid {
+            color: #15803d;
+            font-weight: 700;
+        }
+
+        .shipment {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .shipment-box {
+            background: #f8fafc;
+            padding: 14px;
+            border-radius: 9px;
+        }
+
+        .shipment-box span {
+            display: block;
+            color: #6b7280;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .shipment-box strong {
+            font-size: 14px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 13px;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .primary {
+            background: #f97316;
+            color: white;
+        }
+
+        .secondary {
+            background: white;
+            border: 1px solid #d1d5db;
+            color: #172033;
+        }
+
+        .primary:hover {
+            background: #ea580c;
+        }
+
+        .secondary:hover {
+            background: #f8fafc;
+        }
+
+        .support {
+            background: #172033;
+            color: white;
+            border-radius: 14px;
+            padding: 23px;
+        }
+
+        .support h2 {
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .support p {
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .support-button {
+            display: inline-block;
+            margin-top: 15px;
+            background: white;
+            color: #172033;
+            padding: 10px 16px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        footer {
+            background: #172033;
+            color: #ffffff;
+            text-align: center;
+            padding: 28px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 850px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav {
+                gap: 12px;
+            }
+
+            .secure {
+                display: none;
+            }
+        }
+
+        @media (max-width: 550px) {
+            header {
+                padding: 0 4%;
+            }
+
+            .nav a:nth-child(1),
+            .nav a:nth-child(2) {
+                display: none;
+            }
+
+            .page {
+                width: 92%;
+            }
+
+            .heading h1 {
+                font-size: 27px;
+            }
+
+            .shipment {
+                grid-template-columns: 1fr;
+            }
+
+            .product {
+                align-items: flex-start;
+            }
+
+            .product img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+        /* =========================================================
+   NEXORA PROFESSIONAL NAVIGATION
+   ========================================================= */
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Home / Products / My Orders */
+
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    min-height: 42px;
+    padding: 0 15px;
+
+    border: 1px solid #dbe3ef;
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #172d55;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.nav-btn:hover {
+    background: #f3f7fc;
+    border-color: #9db3d0;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 16px rgba(23, 45, 85, 0.10);
+}
+
+/* Secure Delivery */
+
+.secure-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    min-height: 42px;
+    padding: 0 15px;
+
+    border-radius: 10px;
+
+    background: #eef7f1;
+    border: 1px solid #cce7d4;
+
+    color: #187044;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* Logout */
+
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    min-height: 42px;
+    padding: 0 16px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: linear-gradient(
+        135deg,
+        #172d55,
+        #28599c
+    );
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+
+    box-shadow:
+        0 5px 14px rgba(23, 45, 85, 0.16);
+}
+
+.logout-btn:hover {
+    background: linear-gradient(
+        135deg,
+        #0f2142,
+        #1e4785
+    );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 18px rgba(23, 45, 85, 0.22);
+}
+
+.logout-btn:active,
+.nav-btn:active {
+    transform: translateY(0);
+}
+
+/* Mobile */
+
+@media (max-width: 900px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 18px;
+    }
+
+    .nav {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .nav {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+    }
+
+    .nav-btn,
+    .secure-badge,
+    .logout-btn {
+        width: 100%;
+    }
+
+}
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Nexora</div>
+
+    <div class="nav">
+
+    <a href="index.html" class="nav-btn">
+        🏠 <span>Home</span>
+    </a>
+
+    <a href="products.html" class="nav-btn">
+        🛍️ <span>Products</span>
+    </a>
+
+    <a href="order-history.html" class="nav-btn">
+        📦 <span>My Orders</span>
+    </a>
+
+    <div class="secure-badge">
+        🔒 <span>Secure Delivery</span>
+    </div>
+
+    <button id="logoutBtn" class="logout-btn" type="button">
+        ↪ <span>Logout</span>
+    </button>
+
+</div>
+</header>
+
+<main class="page">
+
+    <div class="heading">
+        <h1>Track Your Order</h1>
+        <p>Stay updated on your Nexora order from confirmation to delivery.</p>
+    </div>
+
+    <div id="orderHeader" class="order-header"></div>
+
+    <div class="grid">
+
+        <div>
+
+            <div class="card">
+                <h2>Shipment Tracking</h2>
+                <div id="tracking" class="tracking"></div>
+            </div>
+
+            <div class="card">
+                <h2>Order Items</h2>
+                <div id="products"></div>
+            </div>
+
+            <div class="card">
+                <h2>Shipment Details</h2>
+
+                <div class="shipment">
+
+                    <div class="shipment-box">
+                        <span>Tracking ID</span>
+                        <strong id="trackingId"></strong>
+                    </div>
+
+                    <div class="shipment-box">
+                        <span>Courier Partner</span>
+                        <strong>Nexora Logistics</strong>
+                    </div>
+
+                    <div class="shipment-box">
+                        <span>Package Type</span>
+                        <strong>Standard Delivery</strong>
+                    </div>
+
+                    <div class="shipment-box">
+                        <span>Delivery Status</span>
+                        <strong id="shipmentStatus" style="color:#4f46e5;"></strong>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div>
+
+            <div class="card">
+                <h2>Delivery Address</h2>
+
+                <div class="delivery-row">
+
+                    <div class="delivery-icon">⌂</div>
+
+                    <div class="delivery-info">
+                        <h3>Home</h3>
+
+                        <p id="address">
+                            Customer Address<br>
+                            Pune, Maharashtra<br>
+                            India
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Payment Details</h2>
+
+                <div class="payment-row">
+                    <span>Payment Method</span>
+                    <strong id="paymentMethod">UPI</strong>
+                </div>
+
+                <div class="payment-row">
+                    <span>Payment Status</span>
+                    <span id="paymentStatus" class="paid">Paid</span>
+                </div>
+
+                <div class="payment-row">
+                    <span>Order Total</span>
+                    <strong id="orderTotal">₹0</strong>
+                </div>
+
+            </div>
+
+            <div class="support">
+
+                <h2>Need Help?</h2>
+
+                <p>
+                    Having an issue with your order or delivery?
+                    Our customer support team is available to help.
+                </p>
+
+                <a href="#" class="support-button">
+                    Contact Support
+                </a>
+
+            </div>
+
+            <div class="buttons">
+
+                <a href="order-history.html" class="btn secondary">
+                    My Orders
+                </a>
+
+                <a href="products.html" class="btn primary">
+                    Continue Shopping
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<footer>
+    © 2026 Nexora — Cloud-Based Smart E-Commerce and Order Management System
+</footer>
+
+<script type="module">
+
+import { db, auth } from "./firebase-config.js";
+
+import {
+    doc,
+    getDoc
+} from "firebase/firestore";
+
+import { signOut } from "firebase/auth";
+
+
+const savedOrder =
+    JSON.parse(
+        localStorage.getItem("nexoraSelectedOrder")
+    );
+
+
+if (!savedOrder) {
+
+    document.getElementById("orderHeader").innerHTML = `
+        <div>
+            <div class="order-id">Order Information</div>
+            <strong>No order selected</strong>
+        </div>
+    `;
+
+    document.getElementById("products").innerHTML = `
+        <p style="color:#6b7280;">
+            Please go to My Orders and select an order to track.
+        </p>
+    `;
+
+} else {
+
+    try {
+
+        /*
+         * Get the latest order from Firebase
+         */
+        const orderRef =
+            doc(
+                db,
+                "orders",
+                savedOrder.orderId
+            );
+
+        const orderSnapshot =
+            await getDoc(orderRef);
+
+
+        let order = savedOrder;
+
+
+        if (orderSnapshot.exists()) {
+
+            const firebaseData =
+                orderSnapshot.data();
+
+            order = {
+                ...savedOrder,
+                ...firebaseData,
+                orderId: savedOrder.orderId
+            };
+
+        }
+
+
+        /*
+         * Order information
+         */
+
+        const items =
+            Array.isArray(order.items)
+                ? order.items
+                : [];
+
+
+        const status =
+            order.status || "Confirmed";
+
+
+        let trackingId =
+            order.trackingId;
+
+
+        if (!trackingId) {
+
+            trackingId =
+                "NXR-TRK-" +
+                order.orderId.slice(-5);
+
+        }
+
+
+        const paymentMethod =
+            order.paymentMethod || "UPI";
+
+
+        const paymentStatus =
+            order.paymentStatus || "Paid";
+
+
+        const total =
+            Number(
+                order.total ||
+                order.amount ||
+                0
+            );
+
+
+        const orderDate =
+            order.date ||
+            order.orderDate ||
+            "03 October 2026";
+
+
+        let deliveryDate =
+            order.deliveryDate;
+
+
+        if (!deliveryDate) {
+
+            const date =
+                new Date(orderDate);
+
+            if (!isNaN(date.getTime())) {
+
+                date.setDate(
+                    date.getDate() + 4
+                );
+
+                deliveryDate =
+                    date.toLocaleDateString(
+                        "en-IN",
+                        {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric"
+                        }
+                    );
+
+            } else {
+
+                deliveryDate =
+                    "Expected delivery";
+
+            }
+
+        }
+
+
+        /*
+         * Status badge
+         */
+
+        const statusClass =
+            String(status).toLowerCase() === "delivered"
+                ? "status-badge status-delivered"
+                : "status-badge";
+
+
+        document.getElementById(
+            "orderHeader"
+        ).innerHTML = `
+
+            <div>
+                <div class="order-id">
+                    Order ID
+                </div>
+
+                <strong>
+                    #${order.orderId}
+                </strong>
+            </div>
+
+
+            <div>
+                <div class="order-id">
+                    Order Date
+                </div>
+
+                <strong>
+                    ${orderDate}
+                </strong>
+            </div>
+
+
+            <div>
+                <div class="order-id">
+                    Expected Delivery
+                </div>
+
+                <strong>
+                    ${deliveryDate}
+                </strong>
+            </div>
+
+
+            <div class="${statusClass}">
+                ${status}
+            </div>
+
+        `;
+
+
+        /*
+         * Shipment details
+         */
+
+        document.getElementById(
+            "trackingId"
+        ).textContent = trackingId;
+
+
+        document.getElementById(
+            "shipmentStatus"
+        ).textContent = status;
+
+
+        document.getElementById(
+            "paymentMethod"
+        ).textContent = paymentMethod;
+
+
+        document.getElementById(
+            "paymentStatus"
+        ).textContent = paymentStatus;
+
+
+        document.getElementById(
+            "orderTotal"
+        ).textContent =
+            "₹" +
+            total.toLocaleString("en-IN");
+
+
+        /*
+         * Products
+         */
+
+        let productHTML = "";
+
+
+        if (items.length === 0) {
+
+            productHTML = `
+                <p style="color:#6b7280;">
+                    No products found for this order.
+                </p>
+            `;
+
+        } else {
+
+            items.forEach(function(item) {
+
+                productHTML += `
+
+                    <div class="product">
+
+                        <img
+                            src="${
+                                item.image ||
+                                'https://via.placeholder.com/100'
+                            }"
+                            alt="${item.name}"
+                        >
+
+                        <div class="product-info">
+
+                            <h3>
+                                ${item.name}
+                            </h3>
+
+                            <p>
+                                Category:
+                                ${item.category || "General"}
+                            </p>
+
+                            <p>
+                                Quantity:
+                                ${item.quantity || 1}
+                            </p>
+
+                            <div class="price">
+                                ₹${
+                                    Number(
+                                        item.price || 0
+                                    ).toLocaleString("en-IN")
+                                }
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            });
+
+        }
+
+
+        document.getElementById(
+            "products"
+        ).innerHTML = productHTML;
+
+
+        /*
+         * Address
+         */
+
+        const customer =
+    order.customer || {};
+
+const addressParts = [
+    customer.address,
+    customer.city,
+    customer.state,
+    customer.pincode
+].filter(Boolean);
+
+if (addressParts.length > 0) {
+
+    document.getElementById(
+        "address"
+    ).innerHTML =
+        addressParts.join("<br>");
+
+}
+
+
+        /*
+         * Tracking steps
+         */
+
+        const steps = [
+
+            {
+                name: "Order Confirmed",
+                description:
+                    "Your order has been confirmed successfully."
+            },
+
+            {
+                name: "Order Packed",
+                description:
+                    "Your package has been packed and prepared for shipment."
+            },
+
+            {
+                name: "Shipped",
+                description:
+                    "Your package has left the Nexora fulfillment center."
+            },
+
+            {
+                name: "In Transit",
+                description:
+                    "Your package is on the way to the delivery location."
+            },
+
+            {
+                name: "Out for Delivery",
+                description:
+                    "Delivery partner will deliver your package."
+            },
+
+            {
+                name: "Delivered",
+                description:
+                    "Your order has been delivered successfully."
+            }
+
+        ];
+
+
+        /*
+         * Decide how many steps are completed
+         * according to the Firebase status.
+         */
+
+        let activeSteps = 1;
+
+
+        const statusValue =
+            String(status).toLowerCase();
+
+
+        if (
+            statusValue === "confirmed"
+        ) {
+
+            activeSteps = 1;
+
+        } else if (
+            statusValue === "processing"
+        ) {
+
+            activeSteps = 2;
+
+        } else if (
+            statusValue === "shipped"
+        ) {
+
+            activeSteps = 4;
+
+        } else if (
+            statusValue === "delivered"
+        ) {
+
+            activeSteps = 6;
+
+        }
+
+
+        /*
+         * Build tracking timeline
+         */
+
+        let trackingHTML = "";
+
+
+        steps.forEach(
+            function(step, index) {
+
+                const active =
+                    index < activeSteps;
+
+
+                const current =
+                    index === activeSteps - 1;
+
+
+                const iconClass =
+                    active
+                        ? "track-icon"
+                        : "track-icon pending";
+
+
+                const lineClass =
+                    index < activeSteps - 1
+                        ? "track-line"
+                        : "track-line pending";
+
+
+                let icon =
+                    active
+                        ? "✓"
+                        : index + 1;
+
+
+                if (current) {
+                    icon = "●";
+                }
+
+
+                let dateText =
+                    "Order processing";
+
+
+                if (active) {
+
+                    if (index === activeSteps - 1) {
+
+                        dateText =
+                            orderDate;
+
+                    } else {
+
+                        dateText =
+                            "Completed";
+
+                    }
+
+                }
+
+
+                if (
+                    index === 4 ||
+                    index === 5
+                ) {
+
+                    if (!active) {
+
+                        dateText =
+                            "Expected " +
+                            deliveryDate;
+
+                    }
+
+                }
+
+
+                trackingHTML += `
+
+                    <div class="track-item">
+
+                        <div class="track-icon-area">
+
+                            <div class="${iconClass}">
+                                ${icon}
+                            </div>
+
+                            ${
+                                index !== steps.length - 1
+                                    ? `<div class="${lineClass}"></div>`
+                                    : ""
+                            }
+
+                        </div>
+
+
+                        <div class="track-content">
+
+                            <h3
+                                class="${
+                                    current
+                                        ? "current"
+                                        : ""
+                                }"
+                            >
+                                ${step.name}
+                            </h3>
+
+
+                            <p>
+                                ${dateText}
+                            </p>
+
+
+                            <p
+                                class="${
+                                    current
+                                        ? "current"
+                                        : ""
+                                }"
+                            >
+                                ${step.description}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+        document.getElementById(
+            "tracking"
+        ).innerHTML = trackingHTML;
+
+
+    } catch (error) {
+
+        console.error(
+            "Error loading tracking order:",
+            error
+        );
+
+
+        document.getElementById(
+            "orderHeader"
+        ).innerHTML = `
+            <div>
+                <div class="order-id">
+                    Order Information
+                </div>
+
+                <strong>
+                    Unable to load order
+                </strong>
+            </div>
+        `;
+
+
+        document.getElementById(
+            "tracking"
+        ).innerHTML = `
+            <p style="color:#6b7280;">
+                Unable to load tracking information.
+                Please try again.
+            </p>
+        `;
+
+    }
+
+}
+
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+
+    try {
+
+        await signOut(auth);
+
+        localStorage.removeItem("nexoraUser");
+        localStorage.removeItem("nexoraSelectedOrder");
+
+        window.location.href = "login.html";
+
+    } catch (error) {
+
+        console.error("Logout error:", error);
+
+        alert("Unable to logout. Please try again.");
+
+    }
+
+});
+</script>
+<script type="module" src="./nexora-chatbot.js"></script>
+</body>
+</html>

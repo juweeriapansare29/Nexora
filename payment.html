@@ -1,0 +1,2519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment | Nexora</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f6f8;
+    color:#172033;
+}
+
+.offer-bar{
+    background:#172033;
+    color:#fff;
+    text-align:center;
+    padding:9px;
+    font-size:13px;
+}
+
+.offer-bar strong{
+    color:#fb923c;
+}
+
+header{
+    background:#fff;
+    border-bottom:1px solid #e5e7eb;
+    padding:16px 6%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:25px;
+}
+
+.logo{
+    font-size:29px;
+    font-weight:800;
+    color:#f97316;
+}
+
+.search{
+    flex:1;
+    max-width:470px;
+}
+
+.search input{
+    width:100%;
+    padding:12px 18px;
+    border:1px solid #d6d9df;
+    border-radius:25px;
+    outline:none;
+    font-size:14px;
+    background:#f8fafc;
+}
+
+.search input:focus{
+    border-color:#f97316;
+}
+
+.nav{
+    display:flex;
+    gap:22px;
+    align-items:center;
+}
+
+.nav a{
+    text-decoration:none;
+    color:#172033;
+    font-size:14px;
+    font-weight:600;
+}
+
+.nav a:hover{
+    color:#f97316;
+}
+
+.breadcrumb{
+    width:88%;
+    max-width:1200px;
+    margin:20px auto;
+    color:#777;
+    font-size:13px;
+}
+
+.breadcrumb span{
+    color:#f97316;
+}
+
+.page{
+    width:88%;
+    max-width:1200px;
+    margin:auto;
+    padding-bottom:55px;
+}
+
+.title{
+    margin-bottom:25px;
+}
+
+.title h1{
+    font-size:30px;
+    margin-bottom:7px;
+}
+
+.title p{
+    color:#6b7280;
+    font-size:14px;
+}
+
+.steps{
+    background:#fff;
+    border-radius:12px;
+    padding:18px 25px;
+    margin-bottom:22px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:25px;
+    border:1px solid #e5e7eb;
+}
+
+.step{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:#9ca3af;
+    font-size:13px;
+    font-weight:600;
+}
+
+.step.active{
+    color:#f97316;
+}
+
+.step.done{
+    color:#15803d;
+}
+
+.step-number{
+    width:27px;
+    height:27px;
+    border-radius:50%;
+    background:#e5e7eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+}
+
+.step.active .step-number{
+    background:#f97316;
+    color:#fff;
+}
+
+.step.done .step-number{
+    background:#15803d;
+    color:#fff;
+}
+
+.step-line{
+    width:55px;
+    height:1px;
+    background:#ddd;
+}
+
+.main-grid{
+    display:grid;
+    grid-template-columns:1.55fr .85fr;
+    gap:22px;
+}
+
+.card{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    margin-bottom:20px;
+    overflow:hidden;
+}
+
+.card-title{
+    padding:20px 23px;
+    border-bottom:1px solid #eee;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.card-title h2{
+    font-size:19px;
+}
+
+.secure-text{
+    color:#15803d;
+    font-size:12px;
+    font-weight:700;
+}
+
+/* ADDRESS */
+
+.address{
+    padding:20px 23px;
+}
+
+.address-header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:12px;
+}
+
+.address-header strong{
+    font-size:14px;
+}
+
+.change{
+    color:#f97316;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.address p{
+    color:#666;
+    font-size:13px;
+    line-height:1.6;
+}
+
+/* PAYMENT METHODS */
+
+.payment-method{
+    border-bottom:1px solid #eee;
+}
+
+.payment-method:last-child{
+    border-bottom:none;
+}
+
+.method-header{
+    padding:17px 23px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.method-header:hover{
+    background:#fafafa;
+}
+
+.method-header.selected{
+    background:#fff7ed;
+}
+
+.radio{
+    width:18px;
+    height:18px;
+    accent-color:#f97316;
+    cursor:pointer;
+}
+
+.method-icon{
+    width:58px;
+    height:44px;
+    border-radius:9px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+    border:1px solid #e2e8f0;
+    overflow:hidden;
+    flex-shrink:0;
+}
+
+.method-icon img{
+    width:48px;
+    height:38px;
+    object-fit:contain;
+}
+
+.method-info{
+    flex:1;
+}
+
+.method-name{
+    font-weight:700;
+    font-size:14px;
+}
+
+.method-description{
+    color:#777;
+    font-size:12px;
+    margin-top:4px;
+}
+
+.recommended{
+    background:#dcfce7;
+    color:#15803d;
+    padding:5px 9px;
+    border-radius:12px;
+    font-size:10px;
+    font-weight:700;
+}
+
+.method-content{
+    display:none;
+    padding:0 23px 23px 76px;
+    background:#fff;
+}
+
+.method-content.active{
+    display:block;
+}
+
+.input-label{
+    display:block;
+    margin:12px 0 7px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.input{
+    width:100%;
+    padding:12px 13px;
+    border:1px solid #d1d5db;
+    border-radius:7px;
+    outline:none;
+    font-size:14px;
+}
+
+.input:focus{
+    border-color:#f97316;
+    box-shadow:0 0 0 3px rgba(249,115,22,.08);
+}
+
+.input-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.upi-input-row{
+    display:flex;
+    gap:9px;
+}
+
+.upi-input-row .input{
+    flex:1;
+}
+
+.verify{
+    border:none;
+    background:#172033;
+    color:#fff;
+    border-radius:7px;
+    padding:0 17px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.verify:hover{
+    background:#27344d;
+}
+
+.small-note{
+    color:#777;
+    font-size:11px;
+    margin-top:7px;
+}
+
+.action-button{
+    border:1px solid #d1d5db;
+    background:#fff;
+    border-radius:8px;
+    width:100%;
+    padding:13px;
+    cursor:pointer;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    font-weight:700;
+}
+
+.action-button:hover{
+    background:#f8fafc;
+}
+
+.gpay-small{
+    height:27px;
+    width:40px;
+    object-fit:contain;
+}
+
+.brand-strip{
+    margin-top:13px;
+    padding:11px 12px;
+    border:1px solid #e5e7eb;
+    border-radius:8px;
+    background:#fafafa;
+}
+
+.brand-strip span{
+    display:block;
+    font-size:11px;
+    color:#64748b;
+    margin-bottom:7px;
+    font-weight:600;
+}
+
+.brand-strip img{
+    height:25px;
+    width:132px;
+    object-fit:contain;
+    object-position:left center;
+}
+
+.card-payment-box{
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:15px;
+    background:#fafafa;
+}
+
+.card-preview{
+    height:145px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#172033,#27344d);
+    color:#fff;
+    padding:18px;
+    margin-bottom:17px;
+    position:relative;
+    overflow:hidden;
+}
+
+.card-preview:after{
+    content:"";
+    position:absolute;
+    width:190px;
+    height:190px;
+    border-radius:50%;
+    right:-65px;
+    top:-80px;
+    background:rgba(249,115,22,.18);
+}
+
+.chip{
+    width:34px;
+    height:25px;
+    border-radius:5px;
+    background:linear-gradient(135deg,#e7c66b,#b98b2c);
+    position:relative;
+    z-index:2;
+}
+
+.chip:after{
+    content:"";
+    position:absolute;
+    left:7px;
+    right:7px;
+    top:6px;
+    bottom:6px;
+    border:1px solid rgba(80,55,10,.5);
+    border-radius:2px;
+}
+
+.card-preview-number{
+    margin-top:22px;
+    font-size:17px;
+    letter-spacing:2px;
+    position:relative;
+    z-index:2;
+}
+
+.card-preview-bottom{
+    position:absolute;
+    bottom:15px;
+    left:18px;
+    right:18px;
+    display:flex;
+    justify-content:space-between;
+    font-size:10px;
+    text-transform:uppercase;
+    color:#dbe4ef;
+    z-index:2;
+}
+
+.card-preview-brand{
+    font-weight:800;
+    font-size:13px;
+    color:#fff;
+}
+
+.demo{
+    background:#fff7ed;
+    border:1px solid #fed7aa;
+    color:#9a3412;
+    border-radius:9px;
+    padding:13px;
+    font-size:12px;
+    line-height:1.5;
+    margin-top:15px;
+}
+
+/* ORDER SUMMARY */
+
+.summary{
+    position:sticky;
+    top:20px;
+}
+
+.summary-body{
+    padding:20px;
+}
+
+.summary-items{
+    max-height:330px;
+    overflow-y:auto;
+}
+
+.summary-product{
+    display:flex;
+    gap:12px;
+    padding-bottom:15px;
+    margin-bottom:15px;
+    border-bottom:1px solid #eee;
+}
+
+.summary-product img{
+    width:65px;
+    height:65px;
+    object-fit:cover;
+    border-radius:8px;
+    background:#f1f1f1;
+    flex-shrink:0;
+}
+
+.summary-product-info{
+    flex:1;
+    min-width:0;
+}
+
+.summary-product-name{
+    font-size:13px;
+    font-weight:700;
+    line-height:1.4;
+    margin-bottom:5px;
+}
+
+.summary-product-qty{
+    color:#777;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.summary-product-pricing{
+    margin-top:7px;
+}
+
+.summary-selling-price{
+    font-size:14px;
+    font-weight:800;
+    color:#172033;
+}
+
+.summary-mrp{
+    color:#888;
+    font-size:11px;
+    text-decoration:line-through;
+    margin-top:3px;
+}
+
+.summary-discount{
+    color:#15803d;
+    font-size:11px;
+    font-weight:700;
+    margin-top:3px;
+}
+
+.summary-product-total{
+    text-align:right;
+    min-width:72px;
+}
+
+.summary-total-label{
+    color:#777;
+    font-size:10px;
+    margin-bottom:4px;
+}
+
+.summary-total-price{
+    font-size:13px;
+    font-weight:800;
+}
+
+.price-row{
+    display:flex;
+    justify-content:space-between;
+    margin:13px 0;
+    font-size:14px;
+}
+
+.price-row span:first-child{
+    color:#6b7280;
+}
+
+.discount{
+    color:#15803d !important;
+    font-weight:600;
+}
+
+.free{
+    color:#15803d;
+    font-weight:700;
+}
+
+.total-row{
+    display:flex;
+    justify-content:space-between;
+    border-top:1px solid #ddd;
+    padding-top:17px;
+    margin-top:17px;
+    font-size:20px;
+    font-weight:800;
+}
+
+.saving-box{
+    background:#f0fdf4;
+    color:#15803d;
+    padding:11px;
+    border-radius:7px;
+    text-align:center;
+    margin-top:17px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.pay-button{
+    width:100%;
+    border:none;
+    background:#f97316;
+    color:#fff;
+    padding:15px;
+    border-radius:9px;
+    font-size:16px;
+    font-weight:800;
+    cursor:pointer;
+    margin-top:18px;
+}
+
+.pay-button:hover{
+    background:#ea580c;
+}
+
+.trust{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:8px;
+    margin-top:17px;
+}
+
+.trust-item{
+    background:#f8fafc;
+    border-radius:7px;
+    padding:10px 5px;
+    text-align:center;
+    font-size:10px;
+    color:#64748b;
+}
+
+.trust-icon{
+    font-size:17px;
+    margin-bottom:5px;
+}
+
+footer{
+    background:#172033;
+    color:#fff;
+    padding:32px 6%;
+    text-align:center;
+    font-size:13px;
+}
+
+footer .footer-logo{
+    color:#fb923c;
+    font-size:22px;
+    font-weight:800;
+    margin-bottom:8px;
+}
+
+footer p{
+    color:#cbd5e1;
+}
+
+@media(max-width:900px){
+    .main-grid{
+        grid-template-columns:1fr;
+    }
+
+    .summary{
+        position:static;
+    }
+
+    .search{
+        display:none;
+    }
+}
+
+@media(max-width:650px){
+    header{
+        padding:14px 4%;
+    }
+
+    .nav{
+        gap:10px;
+    }
+
+    .nav a:nth-child(1),
+    .nav a:nth-child(2){
+        display:none;
+    }
+
+    .page,
+    .breadcrumb{
+        width:92%;
+    }
+
+    .steps{
+        gap:8px;
+        justify-content:space-between;
+    }
+
+    .step-line{
+        width:15px;
+    }
+
+    .step span{
+        display:none;
+    }
+
+    .method-content{
+        padding-left:23px;
+    }
+
+    .input-row{
+        grid-template-columns:1fr;
+    }
+
+    .trust{
+        grid-template-columns:1fr;
+    }
+
+    .recommended{
+        display:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="offer-bar">
+    Nexora Festival is live — <strong>Extra savings on selected products</strong>
+</div>
+
+<header>
+    <div class="logo">Nexora</div>
+
+    <div class="search">
+        <input type="text" placeholder="Search products, brands and more">
+    </div>
+
+    <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+    </div>
+</header>
+
+<div class="breadcrumb">
+    Home &nbsp;›&nbsp; Cart &nbsp;›&nbsp; Checkout &nbsp;›&nbsp;
+    <span>Payment</span>
+</div>
+
+<main class="page">
+
+<div class="title">
+    <h1>Complete Your Payment</h1>
+    <p>Choose a payment method and securely complete your Nexora order.</p>
+</div>
+
+<div class="steps">
+
+    <div class="step done">
+        <div class="step-number">✓</div>
+        <span>Cart</span>
+    </div>
+
+    <div class="step-line"></div>
+
+    <div class="step done">
+        <div class="step-number">✓</div>
+        <span>Address</span>
+    </div>
+
+    <div class="step-line"></div>
+
+    <div class="step active">
+        <div class="step-number">3</div>
+        <span>Payment</span>
+    </div>
+
+    <div class="step-line"></div>
+
+    <div class="step">
+        <div class="step-number">4</div>
+        <span>Confirmation</span>
+    </div>
+
+</div>
+
+<div class="main-grid">
+
+<div>
+
+<!-- DELIVERY ADDRESS -->
+
+<div class="card">
+
+    <div class="card-title">
+        <h2>Delivery Address</h2>
+        <span class="secure-text">✓ Verified</span>
+    </div>
+
+    <div class="address">
+
+        <div class="address-header">
+
+            <strong>Home</strong>
+
+            <span
+                class="change"
+                onclick="window.location.href='checkout.html'"
+            >
+                Change
+            </span>
+
+        </div>
+
+        <p id="deliveryAddress">
+            Loading address...
+        </p>
+
+    </div>
+
+</div>
+
+<!-- PAYMENT OPTIONS -->
+
+<div class="card">
+
+<div class="card-title">
+    <h2>Payment Options</h2>
+    <span class="secure-text">🔒 Secure</span>
+</div>
+
+<!-- UPI -->
+
+<div class="payment-method">
+
+<div
+    class="method-header selected"
+    onclick="selectMethod('upi')"
+>
+
+<input
+    class="radio"
+    type="radio"
+    name="payment"
+    id="upiRadio"
+    checked
+>
+
+<div class="method-icon">
+
+<img
+    src="assets/payment-logos/upi.png"
+    alt="UPI"
+>
+
+</div>
+
+<div class="method-info">
+
+<div class="method-name">
+    UPI
+</div>
+
+<div class="method-description">
+    Google Pay, PhonePe, Paytm and other UPI apps
+</div>
+
+</div>
+
+<span class="recommended">
+    POPULAR
+</span>
+
+</div>
+
+<div
+    class="method-content active"
+    id="upiContent"
+>
+
+<label class="input-label">
+    Enter UPI ID
+</label>
+
+<div class="upi-input-row">
+
+<input
+    class="input"
+    id="upiId"
+    type="text"
+    placeholder="example@upi"
+>
+
+<button
+    class="verify"
+    type="button"
+    onclick="verifyUPI()"
+>
+    Verify
+</button>
+
+</div>
+
+<div
+    class="small-note"
+    id="upiMessage"
+>
+    Enter your UPI ID to continue.
+</div>
+
+</div>
+
+</div>
+
+<!-- GOOGLE PAY -->
+
+<div class="payment-method">
+
+<div
+    class="method-header"
+    onclick="selectMethod('gpay')"
+>
+
+<input
+    class="radio"
+    type="radio"
+    name="payment"
+    id="gpayRadio"
+>
+
+<div class="method-icon">
+
+<img
+    src="assets/payment-logos/google-pay.png"
+    alt="Google Pay"
+>
+
+</div>
+
+<div class="method-info">
+
+<div class="method-name">
+    Google Pay
+</div>
+
+<div class="method-description">
+    Fast and secure payment with Google Pay
+</div>
+
+</div>
+
+</div>
+
+<div
+    class="method-content"
+    id="gpayContent"
+>
+
+<button
+    class="action-button"
+    type="button"
+    onclick="demoGPay()"
+>
+
+<img
+    class="gpay-small"
+    src="assets/payment-logos/google-pay.png"
+    alt="Google Pay"
+>
+
+Continue with Google Pay
+
+</button>
+
+<div class="small-note">
+    Demo payment flow for the Nexora academic project.
+</div>
+
+</div>
+
+</div>
+
+<!-- PHONEPE -->
+
+<div class="payment-method">
+
+<div
+    class="method-header"
+    onclick="selectMethod('phonepe')"
+>
+
+<input
+    class="radio"
+    type="radio"
+    name="payment"
+    id="phonepeRadio"
+>
+
+<div class="method-icon">
+
+<div
+    style="
+        width:28px;
+        height:28px;
+        background:#5f259f;
+        border-radius:50%;
+        color:white;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-weight:800;
+        font-size:13px;
+    "
+>
+    पे
+</div>
+
+</div>
+
+<div class="method-info">
+
+<div class="method-name">
+    PhonePe
+</div>
+
+<div class="method-description">
+    Pay using PhonePe UPI
+</div>
+
+</div>
+
+</div>
+
+<div
+    class="method-content"
+    id="phonepeContent"
+>
+
+<button
+    class="action-button"
+    type="button"
+    onclick="demoAppPayment('PhonePe')"
+>
+    Continue with PhonePe
+</button>
+
+</div>
+
+</div>
+
+<!-- PAYTM -->
+
+<div class="payment-method">
+
+<div
+    class="method-header"
+    onclick="selectMethod('paytm')"
+>
+
+<input
+    class="radio"
+    type="radio"
+    name="payment"
+    id="paytmRadio"
+>
+
+<div class="method-icon">
+
+<img
+    src="assets/payment-logos/paytm.png"
+    alt="Paytm"
+>
+
+</div>
+
+<div class="method-info">
+
+<div class="method-name">
+    Paytm
+</div>
+
+<div class="method-description">
+    Pay securely using Paytm
+</div>
+
+</div>
+
+</div>
+
+<div
+    class="method-content"
+    id="paytmContent"
+>
+
+<button
+    class="action-button"
+    type="button"
+    onclick="demoAppPayment('Paytm')"
+>
+
+<img
+    class="gpay-small"
+    src="assets/payment-logos/paytm.png"
+    alt="Paytm"
+>
+
+Continue with Paytm
+
+</button>
+
+</div>
+
+</div>
+
+<!-- CARD -->
+
+<div class="payment-method">
+
+<div
+    class="method-header"
+    onclick="selectMethod('card')"
+>
+
+<input
+    class="radio"
+    type="radio"
+    name="payment"
+    id="cardRadio"
+>
+
+<div class="method-icon">
+
+<div style="font-size:22px;">
+    💳
+</div>
+
+</div>
+
+<div class="method-info">
+
+<div class="method-name">
+    Credit / Debit Card
+</div>
+
+<div class="method-description">
+    Visa, Mastercard and other cards
+</div>
+
+</div>
+
+</div>
+
+<div
+    class="method-content"
+    id="cardContent"
+>
+
+<div class="card-payment-box">
+
+<div class="card-preview">
+
+<div class="chip"></div>
+
+<div
+    class="card-preview-number"
+    id="cardPreviewNumber"
+>
+    •••• •••• •••• ••••
+</div>
+
+<div class="card-preview-bottom">
+
+<span id="cardPreviewName">
+    CARD HOLDER
+</span>
+
+<span>
+    VALID THRU
+</span>
+
+</div>
+
+</div>
+
+<label class="input-label">
+    Card Number
+</label>
+
+<input
+    class="input"
+    id="cardNumber"
+    type="text"
+    maxlength="19"
+    placeholder="1234 5678 9012 3456"
+>
+
+<label class="input-label">
+    Cardholder Name
+</label>
+
+<input
+    class="input"
+    id="cardName"
+    type="text"
+    placeholder="Enter cardholder name"
+>
+
+<div class="input-row">
+
+<div>
+
+<label class="input-label">
+    Expiry
+</label>
+
+<input
+    class="input"
+    id="expiry"
+    type="text"
+    maxlength="5"
+    placeholder="MM/YY"
+>
+
+</div>
+
+<div>
+
+<label class="input-label">
+    CVV
+</label>
+
+<input
+    class="input"
+    id="cvv"
+    type="password"
+    maxlength="3"
+    placeholder="CVV"
+>
+
+</div>
+
+</div>
+
+<div class="brand-strip">
+
+<span>Cards accepted</span>
+
+<div style="font-size:12px;color:#475569;font-weight:700;">
+    VISA &nbsp; | &nbsp; Mastercard &nbsp; | &nbsp; AMEX
+</div>
+
+</div>
+
+</div>
+
+<div class="small-note">
+    For this academic demo, do not enter real card details.
+</div>
+
+</div>
+
+</div>
+
+<!-- NET BANKING -->
+
+<div class="payment-method">
+
+<div
+    class="method-header"
+    onclick="selectMethod('netbanking')"
+>
+
+<input
+    class="radio"
+    type="radio"
+    name="payment"
+    id="netbankingRadio"
+>
+
+<div class="method-icon">
+
+<span style="font-size:22px;">
+    ▥
+</span>
+
+</div>
+
+<div class="method-info">
+
+<div class="method-name">
+    Net Banking
+</div>
+
+<div class="method-description">
+    Pay through your bank account
+</div>
+
+</div>
+
+</div>
+
+<div
+    class="method-content"
+    id="netbankingContent"
+>
+
+<label class="input-label">
+    Select Bank
+</label>
+
+<select
+    class="input"
+    id="bank"
+>
+
+<option value="">
+    Select your bank
+</option>
+
+<option>
+    State Bank of India
+</option>
+
+<option>
+    HDFC Bank
+</option>
+
+<option>
+    ICICI Bank
+</option>
+
+<option>
+    Axis Bank
+</option>
+
+<option>
+    Kotak Mahindra Bank
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+<!-- COD -->
+
+<div class="payment-method">
+
+<div
+    class="method-header"
+    onclick="selectMethod('cod')"
+>
+
+<input
+    class="radio"
+    type="radio"
+    name="payment"
+    id="codRadio"
+>
+
+<div class="method-icon">
+
+<span style="font-size:22px;">
+    ₹
+</span>
+
+</div>
+
+<div class="method-info">
+
+<div class="method-name">
+    Cash on Delivery
+</div>
+
+<div class="method-description">
+    Pay when your order arrives
+</div>
+
+</div>
+
+</div>
+
+<div
+    class="method-content"
+    id="codContent"
+>
+
+<div class="demo">
+
+Cash on Delivery is available for this demo order.
+Payment will be collected when the package is delivered.
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="demo">
+
+<strong>Academic Demo:</strong>
+
+This Nexora payment gateway simulates the payment process.
+No real money, card number, UPI PIN or banking credentials are processed.
+
+</div>
+
+</div>
+
+<!-- ORDER SUMMARY -->
+
+<div class="summary">
+
+<div class="card">
+
+<div class="card-title">
+    <h2>Order Summary</h2>
+</div>
+
+<div class="summary-body">
+
+<div
+    class="summary-items"
+    id="summaryItems"
+>
+</div>
+
+<div class="price-row">
+
+<span>
+    MRP
+</span>
+
+<strong id="subtotal">
+    ₹0
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+    Discount
+</span>
+
+<strong
+    class="discount"
+    id="discount"
+>
+    -₹0
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+    Delivery
+</span>
+
+<strong class="free">
+    FREE
+</strong>
+
+</div>
+
+<div class="total-row">
+
+<span>
+    Total
+</span>
+
+<span id="total">
+    ₹0
+</span>
+
+</div>
+
+<div
+    class="saving-box"
+    id="saving"
+>
+    You are saving ₹0 on this order.
+</div>
+
+<button
+    class="pay-button"
+    id="payButton"
+    onclick="completePayment()"
+>
+    Pay Securely
+</button>
+
+<div class="trust">
+
+<div class="trust-item">
+    <div class="trust-icon">🔒</div>
+    Secure
+</div>
+
+<div class="trust-item">
+    <div class="trust-icon">✓</div>
+    Verified
+</div>
+
+<div class="trust-item">
+    <div class="trust-icon">↻</div>
+    Protected
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+<footer>
+
+<div class="footer-logo">
+    Nexora
+</div>
+
+<p>
+    Cloud-Based Smart E-Commerce and Order Management System
+</p>
+
+<p style="margin-top:8px">
+    © 2026 Nexora. All rights reserved.
+</p>
+
+</footer>
+
+<script>
+
+let selectedMethod = "upi";
+let checkoutData = null;
+let upiVerified = false;
+
+function formatMoney(value){
+    return "₹" + Number(value || 0).toLocaleString("en-IN");
+}
+
+function selectMethod(method){
+
+    selectedMethod = method;
+    upiVerified = false;
+
+    document
+        .querySelectorAll(".method-content")
+        .forEach(function(content){
+            content.classList.remove("active");
+        });
+
+    document
+        .querySelectorAll(".method-header")
+        .forEach(function(header){
+            header.classList.remove("selected");
+        });
+
+    const radio =
+        document.getElementById(method + "Radio");
+
+    if(radio){
+
+        radio.checked = true;
+
+        radio
+            .closest(".method-header")
+            .classList.add("selected");
+    }
+
+    const content =
+        document.getElementById(method + "Content");
+
+    if(content){
+        content.classList.add("active");
+    }
+}
+
+function verifyUPI(){
+
+    const upi =
+        document
+            .getElementById("upiId")
+            .value
+            .trim();
+
+    const message =
+        document.getElementById("upiMessage");
+
+    if(
+        !upi ||
+        !upi.includes("@") ||
+        upi.startsWith("@") ||
+        upi.endsWith("@")
+    ){
+
+        upiVerified = false;
+
+        message.style.color = "#dc2626";
+
+        message.textContent =
+            "Please enter a valid UPI ID.";
+
+        return false;
+    }
+
+    upiVerified = true;
+
+    message.style.color = "#15803d";
+
+    message.textContent =
+        "UPI ID verified successfully.";
+
+    return true;
+}
+
+function demoGPay(){
+
+    selectMethod("gpay");
+
+    alert(
+        "Google Pay demo selected.\n\n" +
+        "This academic project simulates the payment process."
+    );
+}
+
+function demoAppPayment(app){
+
+    const method =
+        app.toLowerCase() === "phonepe"
+            ? "phonepe"
+            : "paytm";
+
+    selectMethod(method);
+
+    alert(
+        app +
+        " demo payment selected.\n\n" +
+        "This academic project simulates the payment process."
+    );
+}
+
+function escapeHTML(value){
+
+    return String(value || "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+/* LOAD CHECKOUT DATA */
+
+function loadCheckoutData(){
+
+    try{
+
+        const saved =
+            localStorage.getItem("nexoraCheckout");
+
+        checkoutData =
+            saved
+                ? JSON.parse(saved)
+                : null;
+
+    }catch(error){
+
+        checkoutData = null;
+    }
+
+    /*
+       If checkout data is missing,
+       use the current cart as fallback.
+    */
+
+    if(!checkoutData){
+
+        const cart =
+            JSON.parse(
+                localStorage.getItem("nexoraCart")
+            ) || [];
+
+        if(!cart.length){
+
+            document.getElementById(
+                "deliveryAddress"
+            ).textContent =
+                "No checkout address found.";
+
+            document.getElementById(
+                "summaryItems"
+            ).textContent =
+                "Your cart is empty.";
+
+            return;
+        }
+
+        let mrp = 0;
+        let total = 0;
+
+        cart.forEach(function(item){
+
+            const quantity =
+                Number(item.quantity) || 1;
+
+            const price =
+                Number(item.price) || 0;
+
+            const oldPrice =
+                Number(item.oldPrice) || price;
+
+            mrp += oldPrice * quantity;
+            total += price * quantity;
+        });
+
+        checkoutData = {
+
+            items: cart,
+
+            customer: {},
+
+            totals: {
+
+                mrp: mrp,
+
+                discount:
+                    Math.max(
+                        0,
+                        mrp - total
+                    ),
+
+                delivery: 0,
+
+                total: total
+            }
+        };
+    }
+
+    loadAddress();
+    loadSummary();
+}
+
+/* EXACT ADDRESS FROM CHECKOUT */
+
+function loadAddress(){
+
+    const customer =
+        checkoutData.customer || {};
+
+    const box =
+        document.getElementById(
+            "deliveryAddress"
+        );
+
+    let html = "";
+
+    if(customer.name){
+
+        html +=
+            "<strong>" +
+            escapeHTML(customer.name) +
+            "</strong><br>";
+    }
+
+    if(customer.address){
+
+        html +=
+            escapeHTML(customer.address) +
+            "<br>";
+    }
+
+    if(customer.city){
+
+        html +=
+            escapeHTML(customer.city);
+    }
+
+    if(customer.state){
+
+        html +=
+            (customer.city ? ", " : "") +
+            escapeHTML(customer.state);
+    }
+
+    if(customer.pincode){
+
+        html +=
+            (customer.city || customer.state
+                ? " - "
+                : "") +
+            escapeHTML(customer.pincode);
+    }
+
+    if(html){
+
+        html += "<br>India";
+
+    }else{
+
+        html = "Address not provided";
+    }
+
+    box.innerHTML = html;
+}
+
+/* PRODUCT PRICE */
+
+function getPrice(item){
+
+    return Number(item.price) || 0;
+}
+
+function getMRP(item){
+
+    const price =
+        getPrice(item);
+
+    const oldPrice =
+        Number(item.oldPrice);
+
+    return oldPrice > 0
+        ? oldPrice
+        : price;
+}
+
+function getDiscount(item){
+
+    const price =
+        getPrice(item);
+
+    const mrp =
+        getMRP(item);
+
+    if(mrp > price){
+
+        return Math.round(
+            ((mrp - price) / mrp) * 100
+        );
+    }
+
+    return 0;
+}
+
+/* EXACT ORDER SUMMARY */
+
+function loadSummary(){
+
+    if(!checkoutData){
+        return;
+    }
+
+    const items =
+        checkoutData.items || [];
+
+    const box =
+        document.getElementById(
+            "summaryItems"
+        );
+
+    box.innerHTML = "";
+
+    if(!items.length){
+
+        box.innerHTML = `
+            <div style="
+                text-align:center;
+                color:#777;
+                padding:25px 5px;
+                font-size:13px;
+            ">
+                Your cart is empty.
+            </div>
+        `;
+
+        return;
+    }
+
+    let calculatedMrp = 0;
+    let calculatedTotal = 0;
+
+    items.forEach(function(item){
+
+        const quantity =
+            Number(item.quantity) || 1;
+
+        const price =
+            getPrice(item);
+
+        const mrp =
+            getMRP(item);
+
+        const discount =
+            getDiscount(item);
+
+        calculatedMrp +=
+            mrp * quantity;
+
+        calculatedTotal +=
+            price * quantity;
+
+        const image =
+            item.image ||
+            "https://via.placeholder.com/100";
+
+        box.innerHTML += `
+
+            <div class="summary-product">
+
+                <img
+                    src="${escapeHTML(image)}"
+                    alt="${escapeHTML(
+                        item.name || "Product"
+                    )}"
+                    onerror="
+                        this.src='https://via.placeholder.com/100'
+                    "
+                >
+
+                <div class="summary-product-info">
+
+                    <div class="summary-product-name">
+                        ${escapeHTML(
+                            item.name || "Product"
+                        )}
+                    </div>
+
+                    <div class="summary-product-qty">
+                        Quantity: ${quantity}
+                    </div>
+
+                    <div class="summary-product-pricing">
+
+                        <div class="summary-selling-price">
+                            ${formatMoney(price)}
+                        </div>
+
+                        ${
+                            mrp > price
+                            ? `
+                                <div class="summary-mrp">
+                                    ${formatMoney(mrp)}
+                                </div>
+
+                                <div class="summary-discount">
+                                    ${discount}% OFF
+                                </div>
+                            `
+                            : ""
+                        }
+
+                    </div>
+
+                </div>
+
+                <div class="summary-product-total">
+
+                    <div class="summary-total-label">
+                        Total
+                    </div>
+
+                    <div class="summary-total-price">
+                        ${formatMoney(
+                            price * quantity
+                        )}
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+    });
+
+    const saved =
+        checkoutData.totals || {};
+
+    const mrp =
+        Number.isFinite(
+            Number(saved.mrp)
+        )
+        ? Number(saved.mrp)
+        : calculatedMrp;
+
+    const discount =
+        Number.isFinite(
+            Number(saved.discount)
+        )
+        ? Number(saved.discount)
+        : Math.max(
+            0,
+            calculatedMrp - calculatedTotal
+        );
+
+    const delivery =
+        Number(saved.delivery) || 0;
+
+    const total =
+        Number.isFinite(
+            Number(saved.total)
+        )
+        ? Number(saved.total) + delivery
+        : calculatedTotal + delivery;
+
+    document.getElementById(
+        "subtotal"
+    ).textContent =
+        formatMoney(mrp);
+
+    document.getElementById(
+        "discount"
+    ).textContent =
+        "-" + formatMoney(discount);
+
+    document.getElementById(
+        "total"
+    ).textContent =
+        formatMoney(total);
+
+    document.getElementById(
+        "saving"
+    ).textContent =
+        "You are saving " +
+        formatMoney(discount) +
+        " on this order.";
+
+    document.getElementById(
+        "payButton"
+    ).textContent =
+        "Pay " + formatMoney(total);
+}
+
+/* COMPLETE PAYMENT */
+
+async function completePayment(){
+
+    if(!checkoutData){
+
+        alert(
+            "Checkout information is missing. " +
+            "Please return to checkout."
+        );
+
+        location.href =
+            "checkout.html";
+
+        return;
+    }
+
+    if(selectedMethod === "upi"){
+
+        if(!verifyUPI()){
+
+            return;
+        }
+
+        if(!upiVerified){
+
+            alert(
+                "Please verify your UPI ID before continuing."
+            );
+
+            return;
+        }
+    }
+
+    if(selectedMethod === "card"){
+
+        const card =
+            document
+                .getElementById("cardNumber")
+                .value
+                .trim();
+
+        const name =
+            document
+                .getElementById("cardName")
+                .value
+                .trim();
+
+        const expiry =
+            document
+                .getElementById("expiry")
+                .value
+                .trim();
+
+        const cvv =
+            document
+                .getElementById("cvv")
+                .value
+                .trim();
+
+        if(
+            !card ||
+            !name ||
+            !expiry ||
+            !cvv
+        ){
+
+            alert(
+                "Please complete all card details."
+            );
+
+            return;
+        }
+
+        if(
+            card.replace(/\s/g,"").length < 12
+        ){
+
+            alert(
+                "Please enter a valid card number."
+            );
+
+            return;
+        }
+
+        if(cvv.length !== 3){
+
+            alert(
+                "Please enter a valid 3-digit CVV."
+            );
+
+            return;
+        }
+    }
+
+    if(selectedMethod === "netbanking"){
+
+        const bank =
+            document
+                .getElementById("bank")
+                .value;
+
+        if(!bank){
+
+            alert(
+                "Please select your bank."
+            );
+
+            return;
+        }
+    }
+
+    const methodNames = {
+
+        upi:"UPI",
+
+        gpay:"Google Pay",
+
+        phonepe:"PhonePe",
+
+        paytm:"Paytm",
+
+        card:"Credit / Debit Card",
+
+        netbanking:"Net Banking",
+
+        cod:"Cash on Delivery"
+    };
+
+    const methodName =
+        methodNames[selectedMethod] ||
+        "UPI";
+
+    const status =
+        selectedMethod === "cod"
+            ? "Pending"
+            : "Paid";
+
+    const total =
+    Number(checkoutData.totals?.total || 0);
+
+    const paymentData = {
+
+        method:methodName,
+
+        methodCode:selectedMethod,
+
+        status:status,
+
+        amount:total,
+
+        customer:
+            checkoutData.customer || {},
+
+        items:
+            checkoutData.items || [],
+
+        createdAt:
+            new Date().toISOString()
+    };
+
+    localStorage.setItem(
+        "nexoraPayment",
+        JSON.stringify(paymentData)
+    );
+
+    localStorage.setItem(
+        "nexoraPaymentMethod",
+        methodName
+    );
+
+    localStorage.setItem(
+        "nexoraPaymentStatus",
+        status
+    );
+
+    localStorage.setItem(
+        "nexoraOrderStatus",
+        "Confirmed"
+    );
+    const savedOrderId =
+    await window.saveNexoraOrder({
+
+        customer:
+            checkoutData.customer || {},
+
+        items:
+            checkoutData.items || [],
+
+        mrp:
+            checkoutData.totals?.mrp || 0,
+
+        discount:
+            checkoutData.totals?.discount || 0,
+
+        delivery:
+            checkoutData.totals?.delivery || 0,
+
+        total:
+            checkoutData.totals?.total || 0,
+
+        paymentMethod:
+            methodName,
+
+        paymentStatus:
+            status,
+
+        source:
+            checkoutData.source || "Cart"
+
+    });
+
+
+if (!savedOrderId) {
+
+    alert(
+        "Order could not be saved to Firebase. Please try again."
+    );
+
+    return;
+}
+
+
+localStorage.setItem(
+    "nexoraOrderId",
+    savedOrderId
+);
+
+    alert(
+        "Payment successful!\n\n" +
+        "Payment Method: " +
+        methodName +
+        "\n\n" +
+        "Amount: " +
+        formatMoney(total) +
+        "\n\n" +
+        "This is a simulated payment for the Nexora academic project."
+    );
+
+    location.href =
+        "order-confirmation.html";
+}
+
+/* CARD NUMBER */
+
+const cardNumber =
+    document.getElementById(
+        "cardNumber"
+    );
+
+const cardName =
+    document.getElementById(
+        "cardName"
+    );
+
+cardNumber.addEventListener(
+    "input",
+    function(event){
+
+        let value =
+            event.target.value
+                .replace(/\D/g,"")
+                .slice(0,16);
+
+        value =
+            value
+                .replace(
+                    /(.{4})/g,
+                    "$1 "
+                )
+                .trim();
+
+        event.target.value =
+            value;
+
+        document.getElementById(
+            "cardPreviewNumber"
+        ).textContent =
+            value ||
+            "•••• •••• •••• ••••";
+    }
+);
+
+/* CARD NAME */
+
+cardName.addEventListener(
+    "input",
+    function(event){
+
+        document.getElementById(
+            "cardPreviewName"
+        ).textContent =
+            event.target.value
+                .toUpperCase() ||
+            "CARD HOLDER";
+    }
+);
+
+/* EXPIRY */
+
+document
+    .getElementById("expiry")
+    .addEventListener(
+        "input",
+        function(event){
+
+            let value =
+                event.target.value
+                    .replace(/\D/g,"")
+                    .slice(0,4);
+
+            if(value.length > 2){
+
+                value =
+                    value.slice(0,2) +
+                    "/" +
+                    value.slice(2);
+            }
+
+            event.target.value =
+                value;
+        }
+    );
+
+/* START */
+
+loadCheckoutData();
+
+selectMethod("upi");
+
+</script>
+<script type="module">
+
+import { auth, db } from "./firebase-config.js";
+
+import {
+    collection,
+    addDoc,
+    serverTimestamp
+} from "firebase/firestore";
+
+
+window.saveNexoraOrder = async function(orderData) {
+
+    try {
+
+        const user = auth.currentUser;
+
+        if (!user) {
+
+            console.warn(
+                "No Firebase user is currently logged in."
+            );
+
+            return null;
+        }
+
+
+        const orderRef = await addDoc(
+            collection(db, "orders"),
+            {
+
+                orderId:
+                    "NXR" +
+                    Date.now(),
+
+                uid:
+                    user.uid,
+
+                customerEmail:
+                    user.email || "",
+
+                customer:
+                    orderData.customer || {},
+
+                items:
+                    orderData.items || [],
+
+                mrp:
+                    Number(orderData.mrp || 0),
+
+                discount:
+                    Number(orderData.discount || 0),
+
+                delivery:
+                    Number(orderData.delivery || 0),
+
+                total:
+                    Number(orderData.total || 0),
+
+                paymentMethod:
+                    orderData.paymentMethod || "UPI",
+
+                paymentStatus:
+                    orderData.paymentStatus || "Paid",
+
+                status:
+                    "Confirmed",
+
+                assignedEmployee:
+                    "employee@nexora.com",
+
+                source:
+                    orderData.source || "Cart",
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        console.log(
+            "Nexora order saved:",
+            orderRef.id
+        );
+
+
+        return orderRef.id;
+
+
+    } catch(error) {
+
+        console.error(
+            "Failed to save Nexora order:",
+            error
+        );
+
+        return null;
+    }
+
+};
+
+</script>
+</body>
+</html>

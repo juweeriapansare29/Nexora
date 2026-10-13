@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexora Product Import</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      padding: 40px;
+    }
+
+    .box {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    button {
+      padding: 14px 22px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    #status {
+      margin-top: 20px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <h1>Nexora Product Import</h1>
+
+    <button id="importBtn">
+      Add NXR071 - NXR075
+    </button>
+
+    <div id="status"></div>
+  </div>
+
+  <script type="module">
+
+    import { db } from "./firebase-config.js";
+    import { doc, setDoc } from "firebase/firestore";
+
+    const products = [
+
+      {
+        id: "NXR071",
+        name: "Pearl Drop Earrings",
+        category: "Jewelry",
+        price: 899,
+        oldPrice: 1299,
+        badge: "30% Off",
+        rating: 4.7,
+        reviews: 184,
+        stock: 36,
+        image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=900&q=85",
+        description: "Elegant pearl drop earrings designed to add a refined finish to everyday and occasion outfits.",
+        highlights: [
+          "Elegant pearl-drop design",
+          "Lightweight for comfortable wear",
+          "Polished gold-tone finish",
+          "Suitable for casual and festive looks",
+          "Gift-ready presentation"
+        ],
+        specifications: {
+          "Material": "Alloy with pearl-style stones",
+          "Finish": "Gold tone",
+          "Style": "Drop earrings",
+          "Closure": "Push back",
+          "Occasion": "Casual / Party",
+          "Return": "7 Days"
+        }
+      },
+
+      {
+        id: "NXR072",
+        name: "Minimal Gold-Tone Pendant Necklace",
+        category: "Jewelry",
+        price: 1099,
+        oldPrice: 1599,
+        badge: "31% Off",
+        rating: 4.6,
+        reviews: 143,
+        stock: 28,
+        image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=900&q=85",
+        description: "A minimal pendant necklace with a clean gold-tone finish for effortless everyday styling.",
+        highlights: [
+          "Minimal pendant design",
+          "Gold-tone polished finish",
+          "Adjustable chain length",
+          "Lightweight and comfortable",
+          "Works with casual and formal outfits"
+        ],
+        specifications: {
+          "Material": "Alloy",
+          "Finish": "Gold tone",
+          "Chain": "Adjustable",
+          "Pendant Style": "Minimal",
+          "Occasion": "Daily / Occasion wear",
+          "Return": "7 Days"
+        }
+      },
+
+      {
+        id: "NXR073",
+        name: "Soft Knit Winter Muffler",
+        category: "Fashion Accessories",
+        price: 699,
+        oldPrice: 999,
+        badge: "30% Off",
+        rating: 4.5,
+        reviews: 221,
+        stock: 44,
+        image: "https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?auto=format&fit=crop&w=900&q=85",
+        description: "A soft knitted winter muffler made for warmth, comfort and easy everyday layering.",
+        highlights: [
+          "Soft knitted fabric",
+          "Comfortable winter warmth",
+          "Easy to style",
+          "Lightweight and travel friendly",
+          "Suitable for daily wear"
+        ],
+        specifications: {
+          "Material": "Acrylic knit",
+          "Pattern": "Solid",
+          "Length": "Approx. 180 cm",
+          "Season": "Winter",
+          "Care": "Hand wash recommended",
+          "Return": "7 Days"
+        }
+      },
+
+      {
+        id: "NXR074",
+        name: "Aesthetic Ceramic Candle Holder Set",
+        category: "Home Decor",
+        price: 799,
+        oldPrice: 1199,
+        badge: "33% Off",
+        rating: 4.8,
+        reviews: 167,
+        stock: 22,
+        image: "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=900&q=85",
+        description: "A stylish ceramic candle holder set created to bring a warm and aesthetic touch to your home.",
+        highlights: [
+          "Aesthetic ceramic finish",
+          "Set of decorative holders",
+          "Stable tabletop base",
+          "Suitable for living rooms and bedrooms",
+          "Easy to clean"
+        ],
+        specifications: {
+          "Material": "Ceramic",
+          "Finish": "Matte glazed",
+          "Set Contains": "3 candle holders",
+          "Usage": "Home decor",
+          "Placement": "Tabletop / Shelf",
+          "Return": "7 Days"
+        }
+      },
+
+      {
+        id: "NXR075",
+        name: "Premium Sports Gym Duffel Bag",
+        category: "Sports & Fitness",
+        price: 1499,
+        oldPrice: 2199,
+        badge: "32% Off",
+        rating: 4.7,
+        reviews: 196,
+        stock: 19,
+        image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=85",
+        description: "A spacious sports duffel bag designed for gym sessions, short trips and organized everyday carry.",
+        highlights: [
+          "Spacious main compartment",
+          "Separate shoe compartment",
+          "Adjustable shoulder strap",
+          "Durable lightweight construction",
+          "Suitable for gym and travel"
+        ],
+        specifications: {
+          "Material": "Polyester",
+          "Capacity": "35 Litres",
+          "Compartments": "Multiple",
+          "Strap": "Adjustable shoulder strap",
+          "Usage": "Gym / Travel",
+          "Return": "7 Days"
+        }
+      }
+
+    ];
+
+    const button = document.getElementById("importBtn");
+    const status = document.getElementById("status");
+
+    button.addEventListener("click", async () => {
+
+      button.disabled = true;
+      status.innerHTML = "Adding products to Firebase...";
+
+      try {
+
+        for (const product of products) {
+
+          await setDoc(
+            doc(db, "products", product.id),
+            product
+          );
+
+          status.innerHTML += `<br>✓ ${product.id} added`;
+        }
+
+        status.innerHTML += `
+          <br><br>
+          <strong>✅ Success! NXR071 to NXR075 added to Firebase.</strong>
+        `;
+
+      } catch (error) {
+
+        console.error(error);
+
+        status.innerHTML = `
+          <br>
+          <strong>❌ Error:</strong> ${error.message}
+        `;
+
+        button.disabled = false;
+      }
+
+    });
+
+  </script>
+<script type="module" src="./nexora-chatbot.js"></script>
+</body>
+</html>

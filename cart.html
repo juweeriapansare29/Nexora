@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nexora - Shopping Cart</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f6f8;
+    color: #1f2937;
+}
+
+
+/* NAVBAR */
+
+.navbar {
+    height: 70px;
+    background: white;
+    display: flex;
+    align-items: center;
+    padding: 0 6%;
+    gap: 30px;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: #172554;
+}
+
+.search-box {
+    flex: 1;
+    max-width: 650px;
+    display: flex;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 13px 18px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px 0 0 6px;
+    font-size: 14px;
+}
+
+.search-box button {
+    padding: 13px 22px;
+    border: none;
+    background: #172554;
+    color: white;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.nav-actions button {
+    background: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+
+/* PAGE */
+
+.container {
+    width: 90%;
+    max-width: 1250px;
+    margin: 30px auto;
+}
+
+.page-title {
+    margin-bottom: 25px;
+}
+
+.page-title h1 {
+    font-size: 30px;
+}
+
+.page-title p {
+    color: #6b7280;
+    margin-top: 7px;
+}
+
+
+/* CART LAYOUT */
+
+.cart-layout {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 25px;
+}
+
+
+/* CART ITEMS */
+
+.cart-items {
+    background: white;
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.cart-item:first-child {
+    padding-top: 0;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+}
+
+.item-category {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 7px;
+}
+
+.item-name {
+    font-size: 19px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.item-price {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.item-old-price {
+    color: #777;
+    text-decoration: line-through;
+    margin-left: 8px;
+    font-size: 14px;
+}
+
+.item-discount {
+    color: #15803d;
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.quantity button {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #d1d5db;
+    background: white;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.quantity span {
+    width: 40px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.remove-btn {
+    margin-top: 12px;
+    background: none;
+    border: none;
+    color: #dc2626;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.item-total {
+    font-size: 19px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+
+/* EMPTY CART */
+
+.empty-cart {
+    text-align: center;
+    padding: 70px 20px;
+}
+
+.empty-cart h2 {
+    margin-bottom: 10px;
+}
+
+.empty-cart p {
+    color: #6b7280;
+    margin-bottom: 20px;
+}
+
+.shop-btn {
+    background: #172554;
+    color: white;
+    border: none;
+    padding: 13px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+/* SUMMARY */
+
+.summary {
+    background: white;
+    border-radius: 8px;
+    padding: 25px;
+    height: fit-content;
+    position: sticky;
+    top: 95px;
+}
+
+.summary h2 {
+    font-size: 21px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 18px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    color: #4b5563;
+}
+
+.summary-row.total {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 18px;
+    margin-top: 18px;
+    color: #111827;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.savings {
+    background: #f0fdf4;
+    color: #15803d;
+    padding: 12px;
+    border-radius: 5px;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.checkout-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    background: #172554;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.continue-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 13px;
+    border: 1px solid #172554;
+    background: white;
+    color: #172554;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+/* CLOUD INFO */
+
+.cloud-info {
+    margin-top: 25px;
+    background: white;
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.cloud-info h2 {
+    margin-bottom: 10px;
+}
+
+.cloud-info p {
+    color: #6b7280;
+    line-height: 1.6;
+}
+
+
+/* FOOTER */
+
+footer {
+    margin-top: 50px;
+    background: #111827;
+    color: white;
+    padding: 40px 6%;
+}
+
+.footer-logo {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+footer p {
+    color: #cbd5e1;
+    margin-top: 8px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 850px) {
+
+    .cart-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .summary {
+        position: static;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .navbar {
+        height: auto;
+        padding: 15px;
+        flex-wrap: wrap;
+    }
+
+    .search-box {
+        order: 3;
+        width: 100%;
+    }
+
+    .container {
+        width: 94%;
+    }
+
+    .cart-item {
+        grid-template-columns: 90px 1fr;
+    }
+
+    .cart-item img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .item-total {
+        grid-column: 2;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+    <div class="logo">
+        Nexora
+    </div>
+
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            placeholder="Search for products, brands and more"
+        >
+
+        <button>
+            Search
+        </button>
+
+    </div>
+
+
+    <div class="nav-actions">
+
+        <button onclick="window.location.href='index.html'">
+            Home
+        </button>
+
+        <button onclick="window.location.href='products.html'">
+            Products
+        </button>
+
+        <button onclick="window.location.href='login.html'">
+            Login
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<div class="container">
+
+
+    <div class="page-title">
+
+        <h1>
+            Shopping Cart
+        </h1>
+
+        <p>
+            Review your selected products before checkout.
+        </p>
+
+    </div>
+
+
+
+    <div class="cart-layout">
+
+
+        <!-- CART -->
+
+        <section class="cart-items">
+
+            <div id="cartContainer">
+            </div>
+
+        </section>
+
+
+
+        <!-- SUMMARY -->
+
+        <aside class="summary">
+
+            <h2>
+                Price Details
+            </h2>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Price
+                </span>
+
+                <span id="subtotal">
+                    ₹0
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Discount
+                </span>
+
+                <span id="discount">
+                    - ₹0
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Delivery Charges
+                </span>
+
+                <span>
+                    FREE
+                </span>
+
+            </div>
+
+
+            <div class="summary-row total">
+
+                <span>
+                    Total Amount
+                </span>
+
+                <span id="total">
+                    ₹0
+                </span>
+
+            </div>
+
+
+            <div
+                id="savings"
+                class="savings">
+
+                You are saving ₹0 on this order.
+
+            </div>
+
+
+            <button
+                class="checkout-btn"
+                onclick="goToCheckout()">
+
+                Proceed to Checkout
+
+            </button>
+
+
+            <button
+                class="continue-btn"
+                onclick="window.location.href='products.html'">
+
+                Continue Shopping
+
+            </button>
+
+        </aside>
+
+    </div>
+
+
+
+    <!-- CLOUD SECTION -->
+
+    <section class="cloud-info">
+
+        <h2>
+            Nexora Cloud Order Management
+        </h2>
+
+        <p>
+            Your cart information is prepared for the next stage of
+            the Nexora order-management workflow. In the cloud-connected
+            version, customer, product, cart and order information can
+            be managed through the application's cloud database.
+        </p>
+
+    </section>
+
+
+</div>
+
+
+
+<footer>
+
+    <div class="footer-logo">
+        Nexora
+    </div>
+
+    <p>
+        Cloud-Based Smart E-Commerce and Order Management System
+    </p>
+
+    <p>
+        © 2026 Nexora
+    </p>
+
+</footer>
+
+
+
+<script>
+let cart = JSON.parse(localStorage.getItem("nexoraCart")) || [];
+
+function formatMoney(value) {
+    return "₹" + Number(value || 0).toLocaleString("en-IN");
+}
+
+function getSellingPrice(item) {
+    return Number(item.price) || 0;
+}
+
+function getOldPrice(item) {
+    const oldPrice = Number(item.oldPrice);
+    const price = getSellingPrice(item);
+
+    return oldPrice > 0 ? oldPrice : price;
+}
+
+function getDiscountAmount(item) {
+    const oldPrice = getOldPrice(item);
+    const price = getSellingPrice(item);
+
+    return Math.max(0, oldPrice - price);
+}
+
+function getDiscountPercent(item) {
+    const oldPrice = getOldPrice(item);
+    const price = getSellingPrice(item);
+
+    if (oldPrice <= 0 || price >= oldPrice) {
+        return 0;
+    }
+
+    return Math.round(((oldPrice - price) / oldPrice) * 100);
+}
+
+function saveCart() {
+    localStorage.setItem("nexoraCart", JSON.stringify(cart));
+}
+
+function displayCart() {
+    const container = document.getElementById("cartContainer");
+
+    if (!Array.isArray(cart) || cart.length === 0) {
+        container.innerHTML = `
+            <div class="empty-cart">
+                <h2>Your cart is empty</h2>
+                <p>Add products to your cart to continue shopping.</p>
+                <button
+                    class="shop-btn"
+                    onclick="window.location.href='products.html'">
+                    Browse Products
+                </button>
+            </div>
+        `;
+
+        updateSummary();
+        return;
+    }
+
+    container.innerHTML = cart.map((item, index) => {
+        const price = getSellingPrice(item);
+        const oldPrice = getOldPrice(item);
+        const discountPercent = getDiscountPercent(item);
+        const quantity = Math.max(1, Number(item.quantity) || 1);
+        const itemTotal = price * quantity;
+
+        return `
+            <div class="cart-item">
+
+                <img
+                    src="${item.image || "https://via.placeholder.com/120?text=Nexora"}"
+                    alt="${item.name || "Product"}"
+                    onerror="this.src='https://via.placeholder.com/120?text=Nexora'"
+                >
+
+                <div>
+
+                    <p class="item-category">
+                        ${item.category || "Product"}
+                    </p>
+
+                    <div class="item-name">
+                        ${item.name || "Unnamed Product"}
+                    </div>
+
+                    <div>
+                        <span class="item-price">
+                            ${formatMoney(price)}
+                        </span>
+
+                        ${
+                            oldPrice > price
+                                ? `<span class="item-old-price">
+                                    ${formatMoney(oldPrice)}
+                                   </span>`
+                                : ""
+                        }
+                    </div>
+
+                    ${
+                        discountPercent > 0
+                            ? `<div class="item-discount">
+                                ${discountPercent}% OFF
+                               </div>`
+                            : ""
+                    }
+
+                    <div class="quantity">
+
+                        <button
+                            onclick="decreaseItem(${index})">
+                            -
+                        </button>
+
+                        <span>
+                            ${quantity}
+                        </span>
+
+                        <button
+                            onclick="increaseItem(${index})">
+                            +
+                        </button>
+
+                    </div>
+
+                    <button
+                        class="remove-btn"
+                        onclick="removeItem(${index})">
+                        Remove
+                    </button>
+
+                </div>
+
+                <div class="item-total">
+                    ${formatMoney(itemTotal)}
+                </div>
+
+            </div>
+        `;
+    }).join("");
+
+    updateSummary();
+}
+
+function increaseItem(index) {
+    if (!cart[index]) return;
+
+    cart[index].quantity = Math.max(1, Number(cart[index].quantity) || 1) + 1;
+
+    saveCart();
+    displayCart();
+}
+
+function decreaseItem(index) {
+    if (!cart[index]) return;
+
+    const quantity = Math.max(1, Number(cart[index].quantity) || 1);
+
+    if (quantity > 1) {
+        cart[index].quantity = quantity - 1;
+        saveCart();
+    }
+
+    displayCart();
+}
+
+function removeItem(index) {
+    if (!cart[index]) return;
+
+    cart.splice(index, 1);
+
+    saveCart();
+    displayCart();
+}
+
+function updateSummary() {
+    let totalSellingPrice = 0;
+    let totalOriginalPrice = 0;
+
+    cart.forEach(item => {
+        const quantity = Math.max(1, Number(item.quantity) || 1);
+        const price = getSellingPrice(item);
+        const oldPrice = getOldPrice(item);
+
+        totalSellingPrice += price * quantity;
+        totalOriginalPrice += oldPrice * quantity;
+    });
+
+    const discount = Math.max(
+        0,
+        totalOriginalPrice - totalSellingPrice
+    );
+
+    document.getElementById("subtotal").textContent =
+        formatMoney(totalOriginalPrice);
+
+    document.getElementById("discount").textContent =
+        "- " + formatMoney(discount);
+
+    document.getElementById("total").textContent =
+        formatMoney(totalSellingPrice);
+
+    document.getElementById("savings").textContent =
+        "You are saving " +
+        formatMoney(discount) +
+        " on this order.";
+}
+
+function goToCheckout() {
+    if (cart.length === 0) {
+        alert("Your cart is empty. Please add a product first.");
+        return;
+    }
+
+    saveCart();
+
+    window.location.href = "checkout.html";
+}
+
+displayCart();
+</script>
+
+<script type="module" src="./nexora-chatbot.js"></script>
+</body>
+
+</html>
